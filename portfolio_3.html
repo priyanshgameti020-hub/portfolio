@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Priyansh — Creative Developer & Digital Experience Builder. Portfolio.">
+<meta name="keywords" content="portfolio, web designer, developer, Priyansh, creative, UI, frontend">
+<title>Priyansh — Web Designer & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0a0a0a; --bg2: #111111; --bg3: #161616;
+  --green: #00ff7f; --green-dim: #00c45f; --green-glow: rgba(0,255,127,0.15);
+  --white: #f5f5f5; --muted: rgba(245,245,245,0.45); --muted2: rgba(245,245,245,0.2);
+  --border: rgba(255,255,255,0.08); --card: rgba(255,255,255,0.04);
+}
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--bg); color: var(--white); font-family: 'Outfit', sans-serif; overflow-x: hidden; cursor: none; }
+
+/* CURSOR */
+.cur-dot, .cur-ring { position: fixed; pointer-events: none; z-index: 9999; border-radius: 50%; transform: translate(-50%,-50%); }
+.cur-dot { width: 6px; height: 6px; background: var(--green); }
+.cur-ring { width: 36px; height: 36px; border: 1.5px solid rgba(0,255,127,0.5); transition: all 0.12s ease; }
+body:has(a:hover) .cur-ring, body:has(button:hover) .cur-ring { transform: translate(-50%,-50%) scale(1.8); opacity: 0.3; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--green); }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 5%; transition: all 0.4s; }
+nav.scrolled { background: rgba(10,10,10,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+.logo-box { width: 36px; height: 36px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: #000; }
+.logo-text { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; color: var(--white); }
+.logo-text span { color: var(--green); }
+.nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.3s; position: relative; }
+.nav-links a:hover { color: var(--white); }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px; background: var(--green); transition: width 0.3s; }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta { background: var(--green) !important; color: #000 !important; padding: 0.5rem 1.4rem; border-radius: 4px; font-weight: 700 !important; }
+.nav-cta:hover { background: var(--white) !important; }
+.nav-cta::after { display: none !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 0.4rem; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
+.mobile-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(10,10,10,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+.mobile-overlay.open { display: flex; }
+.mobile-overlay a { color: var(--white); text-decoration: none; font-size: 2.2rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; transition: color 0.3s; }
+.mobile-overlay a:hover { color: var(--green); }
+.mob-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--white); font-size: 1.8rem; cursor: pointer; }
+
+/* HERO */
+#hero { min-height: 100vh; background: var(--bg); position: relative; overflow: hidden; display: flex; align-items: center; padding-top: 80px; }
+.hero-blob { position: absolute; border-radius: 50%; background: radial-gradient(circle, var(--green) 0%, transparent 70%); filter: blur(80px); pointer-events: none; }
+.blob-1 { width: 500px; height: 500px; opacity: 0.08; right: -100px; top: 50%; transform: translateY(-50%); }
+.blob-2 { width: 300px; height: 300px; opacity: 0.05; left: 10%; bottom: 0; }
+.hero-grid { position: absolute; inset: 0; pointer-events: none; opacity: 0.04; background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 60px 60px; }
+
+/* SCROLL-ROTATING FRAMES */
+.scroll-frame { position: fixed; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 1s; }
+.scroll-frame.visible { opacity: 1; }
+.sf-1 { width: 340px; height: 340px; top: 10vh; left: -120px; }
+.sf-2 { width: 220px; height: 220px; top: 60vh; right: -60px; }
+.sf-3 { width: 180px; height: 180px; bottom: 15vh; left: 5vw; }
+.sf-4 { width: 260px; height: 260px; top: 30vh; right: 5vw; }
+
+/* PROJECT CARD SCENES */
+.pscene { position:absolute; inset:0; overflow:hidden; }
+.pscene-grid { position:absolute; inset:0; opacity:0.07; background-image: linear-gradient(rgba(0,255,127,0.6) 1px,transparent 1px), linear-gradient(90deg,rgba(0,255,127,0.6) 1px,transparent 1px); background-size:40px 40px; transition:opacity 0.5s; }
+.pcard:hover .pscene-grid { opacity:0.14; }
+.pscene-orb { position:absolute; border-radius:50%; background:radial-gradient(circle, var(--green) 0%, transparent 70%); filter:blur(40px); transition:all 0.6s; }
+.pcard:hover .pscene-orb { filter:blur(30px); transform:scale(1.15); }
+.pscene-ring { position:absolute; border-radius:50%; border:1px solid rgba(0,255,127,0.15); animation:ringpulse 4s ease-in-out infinite; }
+@keyframes ringpulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.08);opacity:0.1} }
+.pscene-lines { position:absolute; inset:0; }
+
+/* JOURNEY SPARK PATHS */
+.tl-spark { display:flex; flex-direction:column; align-items:flex-start; gap:0.6rem; }
+.tl-spark svg { filter: drop-shadow(0 0 8px rgba(0,255,127,0.5)); }
+.tl-act-label { font-family:'Space Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--green); }
+.hero-inner { max-width: 1300px; margin: 0 auto; width: 100%; padding: 0 5%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; position: relative; z-index: 2; }
+.hero-badge { display: inline-flex; align-items: center; gap: 0.6rem; border: 1px solid var(--border); padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 2rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: var(--card); }
+.badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 9rem); line-height: 0.9; letter-spacing: 0.02em; margin-bottom: 1.5rem; }
+.hero-title .green { color: var(--green); }
+.hero-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; max-width: 520px; }
+.hero-actions { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--green); color: #000; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; padding: 0.85rem 2rem; border-radius: 4px; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; position: relative; overflow: hidden; }
+.btn-primary::before { content: ''; position: absolute; inset: 0; background: var(--white); transform: translateX(-100%); transition: transform 0.3s; }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+.btn-outline { display: inline-flex; align-items: center; gap: 0.6rem; border: 1.5px solid var(--border); color: var(--white); font-weight: 500; font-size: 0.85rem; letter-spacing: 0.05em; padding: 0.85rem 2rem; border-radius: 4px; text-decoration: none; transition: all 0.3s; background: transparent; }
+.btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+/* Hero right */
+.hero-right { position: relative; align-self: flex-end; width: clamp(280px, 35vw, 460px); }
+.person-placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%); border-radius: 8px 8px 0 0; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; position: relative; }
+.person-glow { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 200px; background: radial-gradient(circle, rgba(0,255,127,0.3) 0%, transparent 70%); filter: blur(40px); }
+.person-svg { width: 75%; position: relative; z-index: 2; filter: drop-shadow(0 0 30px rgba(0,255,127,0.2)); animation: pbreathe 6s ease-in-out infinite; }
+@keyframes pbreathe { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.hero-tag-float { position: absolute; z-index: 10; background: rgba(10,10,10,0.9); border: 1px solid var(--border); backdrop-filter: blur(10px); border-radius: 8px; padding: 0.7rem 1rem; min-width: 130px; }
+.tag-top { top: 15%; left: -40px; animation: f1 5s ease-in-out infinite; }
+.tag-bot { bottom: 20%; right: -30px; animation: f2 6s ease-in-out infinite; }
+@keyframes f1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes f2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+.tag-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--green); line-height: 1; }
+.tag-lbl { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+
+/* STATS BAR */
+.stats-bar { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.5rem 5%; }
+.stats-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.stat-item { display: flex; align-items: center; gap: 0.8rem; }
+.stat-icon { font-size: 1.4rem; opacity: 0.7; }
+.stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--green); line-height: 1; }
+.stat-lbl { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+.stat-div { width: 1px; height: 40px; background: var(--border); }
+
+/* ABOUT */
+#about { padding: 7rem 5%; background: var(--bg); }
+.about-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.sec-eye { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+.sec-eye::before { content: ''; width: 24px; height: 1.5px; background: var(--green); }
+.about-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; margin-bottom: 1.5rem; letter-spacing: 0.02em; }
+.about-title .green { color: var(--green); }
+.about-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.9; margin-bottom: 2rem; }
+.about-list { list-style: none; margin-bottom: 2.5rem; }
+.about-list li { display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem; color: var(--muted); padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.about-list li::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; flex-shrink: 0; }
+.about-img-wrap { width: 100%; aspect-ratio: 4/5; background: var(--bg3); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
+.about-img-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--green), transparent); }
+.about-emoji { font-size: 8rem; opacity: 0.12; }
+.about-card-float { position: absolute; bottom: -20px; left: -20px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.5rem; }
+.card-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--green); line-height: 1; }
+.card-lbl { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* SKILLS */
+#skills { padding: 7rem 5%; background: var(--bg2); border-top: 1px solid var(--border); }
+.skills-inner { max-width: 1300px; margin: 0 auto; }
+.sec-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+.sec-title .green { color: var(--green); }
+.sec-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 500px; margin-bottom: 3rem; }
+.skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.sk-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; transition: all 0.4s; }
+.sk-card:hover { border-color: var(--green); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,255,127,0.07); }
+.sk-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--green); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; z-index:2; }
+.sk-card:hover::before { transform: scaleX(1); }
+.sk-img { width: 100%; height: 140px; object-fit: cover; display: block; filter: brightness(0.75) saturate(1.1); transition: filter 0.4s, transform 0.4s; }
+.sk-card:hover .sk-img { filter: brightness(0.9) saturate(1.3); transform: scale(1.04); }
+.sk-body { padding: 1.4rem 1.5rem 1.5rem; }
+.sk-layer { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+.sk-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+.sk-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+.sk-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.sk-tag { font-size: 0.6rem; letter-spacing: 0.05em; border: 1px solid var(--border); padding: 0.2rem 0.5rem; border-radius: 3px; color: var(--muted); transition: all 0.3s; }
+.sk-card:hover .sk-tag { border-color: rgba(0,255,127,0.2); color: rgba(0,255,127,0.7); }
+.sk-bar { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.sk-fill { height: 100%; background: var(--green); transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(0.16,1,0.3,1); border-radius: 2px; }
+.stat-icon svg { width: 28px; height: 28px; opacity: 0.75; }
+.tl-icon-wrap { margin-bottom: 0.5rem; }
+.tl-icon-wrap svg { width: 32px; height: 32px; }
+.pvis-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.45) saturate(1.2); transition: filter 0.5s, transform 0.5s; }
+.pcard:hover .pvis-img { filter:brightness(0.65) saturate(1.4); transform:scale(1.05); }
+
+/* JOURNEY */
+#journey { padding: 7rem 5%; background: var(--bg); border-top: 1px solid var(--border); }
+.journey-inner { max-width: 1300px; margin: 0 auto; }
+.timeline { position: relative; margin-top: 3rem; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.tl-item { display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 2.5rem 0 2.5rem 2.5rem; border-bottom: 1px solid var(--border); position: relative; transition: all 0.4s; }
+.tl-item::before { content: ''; position: absolute; left: -5px; top: 2.5rem; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); transition: all 0.4s; }
+.tl-item:hover::before { background: var(--green); border-color: var(--green); box-shadow: 0 0 15px var(--green-glow); }
+.tl-item:hover { background: rgba(255,255,255,0.015); }
+.tl-year { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: rgba(255,255,255,0.1); line-height: 1; margin-bottom: 0.3rem; }
+.tl-phase { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); }
+.tl-icon { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+.tl-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.tl-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; }
+
+/* PROJECTS */
+#projects { padding: 7rem 5%; background: var(--bg2); border-top: 1px solid var(--border); }
+.projects-inner { max-width: 1300px; margin: 0 auto; }
+.proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+.pcard { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.4s; position: relative; }
+.pcard:hover { border-color: var(--green); transform: translateY(-8px); box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+.pcard-lg { grid-column: span 2; }
+.pvis { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.pcard-lg .pvis { height: 280px; }
+.pcard:not(.pcard-lg) .pvis { height: 180px; }
+.pvis-bg { position: absolute; inset: 0; transition: all 0.5s; }
+.pcard:hover .pvis-bg { transform: scale(1.05); }
+.pvis-icon { position: relative; z-index: 2; font-size: 4rem; opacity: 0.6; transition: all 0.4s; }
+.pcard:hover .pvis-icon { opacity: 0.9; transform: scale(1.1); }
+.pline { position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--green); transition: width 0.5s ease; z-index: 10; }
+.pcard:hover .pline { width: 100%; }
+.pbody { padding: 1.5rem; }
+.pgenre { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+.pname { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+.pdesc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+.ptech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ptag { font-size: 0.6rem; border: 1px solid var(--border); padding: 0.2rem 0.6rem; border-radius: 3px; color: var(--muted); transition: all 0.3s; }
+.pcard:hover .ptag { border-color: rgba(0,255,127,0.25); color: rgba(0,255,127,0.7); }
+.pfooter { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
+.plink { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: gap 0.3s; }
+.plink:hover { gap: 0.8rem; }
+.pyear { font-size: 0.6rem; color: var(--muted); font-family: 'Space Mono', monospace; }
+
+/* CONTACT */
+#contact { padding: 8rem 5%; background: var(--bg); border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+.cblob { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, var(--green) 0%, transparent 70%); filter: blur(120px); opacity: 0.04; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; animation: cpulse 8s ease-in-out infinite; }
+@keyframes cpulse { 0%,100%{opacity:0.04;transform:translate(-50%,-50%) scale(1)} 50%{opacity:0.07;transform:translate(-50%,-50%) scale(1.1)} }
+.contact-inner { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
+.c-eye { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green); margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.c-eye::before, .c-eye::after { content: ''; width: 30px; height: 1.5px; background: var(--green); }
+.c-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 8vw, 7rem); line-height: 0.9; letter-spacing: 0.02em; margin-bottom: 1.5rem; }
+.c-title .green { color: var(--green); }
+.c-sub { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 3rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+.c-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+.social-row { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+.slink { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.05em; transition: color 0.3s; padding: 0.5rem; border-bottom: 1px solid transparent; }
+.slink:hover { color: var(--green); border-bottom-color: var(--green); }
+
+/* FOOTER */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2rem 5%; }
+.footer-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--green); letter-spacing: 0.1em; }
+.footer-copy { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 0.7rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
+.footer-links a:hover { color: var(--green); }
+
+/* REVEAL */
+.rv { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rv.v { opacity: 1; transform: translateY(0); }
+.rvl { opacity: 0; transform: translateX(-30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rvl.v { opacity: 1; transform: translateX(0); }
+.rvr { opacity: 0; transform: translateX(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rvr.v { opacity: 1; transform: translateX(0); }
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .skills-grid { grid-template-columns: repeat(2,1fr); }
+  .proj-grid { grid-template-columns: 1fr; }
+  .pcard-lg { grid-column: span 1; }
+  .tl-item { grid-template-columns: 1fr; gap: 0.5rem; padding-left: 2rem; }
+  .tl-year { font-size: 1.5rem; }
+  .stat-div { display: none; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+}
+@media (max-width: 550px) {
+  .skills-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+
+/* POPUP OVERLAY */
+.popup-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(8px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.4s ease;
+  z-index:9999;
+  padding:1rem;
+}
+.popup-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* CONTACT MODAL */
+.cmodal{
+  width:90%;
+  max-width:480px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#111;
+  border:1px solid rgba(0,255,127,0.15);
+  box-shadow:0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(0,255,127,0.05);
+  transform:scale(0.8) translateY(40px);
+  transition:0.4s cubic-bezier(0.16,1,0.3,1);
+  position:relative;
+}
+.popup-overlay.active .cmodal{
+  transform:scale(1) translateY(0);
+}
+.cmodal-header{
+  background:linear-gradient(135deg,#001a0d 0%,#003320 50%,#001a0d 100%);
+  padding:2rem 2rem 1.4rem;
+  position:relative;
+  border-bottom:1px solid rgba(0,255,127,0.12);
+  overflow:hidden;
+}
+.cmodal-header::before{
+  content:'';
+  position:absolute;
+  width:300px;height:300px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(0,255,127,0.18) 0%,transparent 70%);
+  top:-100px;right:-80px;
+  pointer-events:none;
+}
+.cmodal-header::after{
+  content:'';
+  position:absolute;
+  width:200px;height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(0,255,127,0.1) 0%,transparent 70%);
+  bottom:-80px;left:-50px;
+  pointer-events:none;
+}
+.cmodal-close{
+  position:absolute;
+  top:1rem;right:1rem;
+  width:32px;height:32px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.1);
+  color:#fff;
+  font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:all 0.3s;
+  z-index:2;
+}
+.cmodal-close:hover{background:rgba(0,255,127,0.2);border-color:rgba(0,255,127,0.4);}
+.cmodal-avatar{
+  width:52px;height:52px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#00ff7f,#00c45f);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;
+  color:#000;
+  margin-bottom:1rem;
+  position:relative;z-index:1;
+  box-shadow:0 0 24px rgba(0,255,127,0.4);
+}
+.cmodal-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;
+  letter-spacing:0.05em;
+  color:#fff;
+  line-height:1;
+  margin-bottom:0.3rem;
+  position:relative;z-index:1;
+}
+.cmodal-title span{color:var(--green);}
+.cmodal-sub{
+  font-size:0.75rem;
+  color:rgba(245,245,245,0.5);
+  letter-spacing:0.04em;
+  position:relative;z-index:1;
+}
+.cmodal-chips{
+  display:flex;
+  gap:0.6rem;
+  flex-wrap:wrap;
+  margin-top:1rem;
+  position:relative;z-index:1;
+}
+.cchip{
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+  background:rgba(0,255,127,0.08);
+  border:1px solid rgba(0,255,127,0.2);
+  border-radius:20px;
+  padding:0.3rem 0.8rem;
+  font-size:0.68rem;
+  color:rgba(0,255,127,0.9);
+  letter-spacing:0.04em;
+}
+.cchip svg{width:12px;height:12px;flex-shrink:0;}
+.cmodal-body{
+  padding:1.6rem 2rem 2rem;
+}
+.cmodal-form{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.cform-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0.8rem;
+}
+.cform-field{
+  display:flex;
+  flex-direction:column;
+  gap:0.4rem;
+}
+.cform-label{
+  font-size:0.65rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(245,245,245,0.4);
+  font-family:'Space Mono',monospace;
+}
+.cform-input{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:8px;
+  padding:0.75rem 1rem;
+  color:#fff;
+  font-family:'Outfit',sans-serif;
+  font-size:0.85rem;
+  outline:none;
+  transition:border-color 0.3s, box-shadow 0.3s;
+  width:100%;
+}
+.cform-input:focus{
+  border-color:rgba(0,255,127,0.4);
+  box-shadow:0 0 0 3px rgba(0,255,127,0.07);
+}
+.cform-input::placeholder{color:rgba(245,245,245,0.2);}
+textarea.cform-input{resize:none;height:90px;}
+.cmodal-submit{
+  width:100%;
+  padding:0.9rem;
+  background:var(--green);
+  color:#000;
+  font-family:'Outfit',sans-serif;
+  font-weight:700;
+  font-size:0.85rem;
+  letter-spacing:0.06em;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition:all 0.3s;
+  position:relative;
+  overflow:hidden;
+}
+.cmodal-submit::before{
+  content:'';
+  position:absolute;inset:0;
+  background:#fff;
+  transform:translateX(-100%);
+  transition:transform 0.3s;
+}
+.cmodal-submit:hover::before{transform:translateX(0);}
+.cmodal-submit span{position:relative;z-index:1;}
+.cmodal-divider{height:1px;background:rgba(255,255,255,0.06);margin:0.6rem 0;}
+.cmodal-social{
+  display:flex;
+  justify-content:center;
+  gap:1.2rem;
+}
+.cmod-slink{
+  font-size:0.68rem;
+  color:rgba(245,245,245,0.35);
+  text-decoration:none;
+  letter-spacing:0.05em;
+  transition:color 0.3s;
+}
+.cmod-slink:hover{color:var(--green);}
+
+/* SEND-BTN (Start A Project popup) */
+.send-btn{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#fff;
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<div class="mobile-overlay" id="mob">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#skills" onclick="closeMob()">Services</a>
+  <a href="#journey" onclick="closeMob()">Journey</a>
+  <a href="#projects" onclick="closeMob()">Projects</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<nav id="nb">
+  <a href="#" class="nav-logo">
+    <div class="logo-box">PG</div>
+    <span class="logo-text">WEB<span>DESIGNER</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Services</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#" class="nav-cta" onclick="openContactModal(event)">Contact Us</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMob()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ROTATING SVG FRAMES -->
+<div class="scroll-frame sf-1" id="sf1">
+  <svg viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg" width="340" height="340">
+    <rect x="20" y="20" width="300" height="300" rx="16" stroke="rgba(0,255,127,0.08)" stroke-width="1.5" fill="none"/>
+    <rect x="50" y="50" width="240" height="240" rx="10" stroke="rgba(0,255,127,0.06)" stroke-width="1" fill="none" stroke-dasharray="6 6"/>
+    <circle cx="170" cy="170" r="80" stroke="rgba(0,255,127,0.05)" stroke-width="1" fill="none"/>
+    <line x1="20" y1="170" x2="320" y2="170" stroke="rgba(0,255,127,0.04)" stroke-width="1"/>
+    <line x1="170" y1="20" x2="170" y2="320" stroke="rgba(0,255,127,0.04)" stroke-width="1"/>
+    <circle cx="170" cy="170" r="4" fill="rgba(0,255,127,0.3)"/>
+    <circle cx="20" cy="20" r="4" fill="rgba(0,255,127,0.2)"/>
+    <circle cx="320" cy="20" r="4" fill="rgba(0,255,127,0.2)"/>
+    <circle cx="20" cy="320" r="4" fill="rgba(0,255,127,0.2)"/>
+    <circle cx="320" cy="320" r="4" fill="rgba(0,255,127,0.2)"/>
+  </svg>
+</div>
+<div class="scroll-frame sf-2" id="sf2">
+  <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" width="220" height="220">
+    <polygon points="110,10 200,60 200,160 110,210 20,160 20,60" stroke="rgba(0,255,127,0.09)" stroke-width="1.5" fill="none"/>
+    <polygon points="110,35 178,73 178,147 110,185 42,147 42,73" stroke="rgba(0,255,127,0.06)" stroke-width="1" fill="none" stroke-dasharray="5 5"/>
+    <circle cx="110" cy="110" r="30" stroke="rgba(0,255,127,0.06)" stroke-width="1" fill="none"/>
+    <circle cx="110" cy="110" r="4" fill="rgba(0,255,127,0.25)"/>
+  </svg>
+</div>
+<div class="scroll-frame sf-3" id="sf3">
+  <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" width="180" height="180">
+    <rect x="10" y="10" width="160" height="160" rx="80" stroke="rgba(0,255,127,0.07)" stroke-width="1.5" fill="none"/>
+    <rect x="30" y="30" width="120" height="120" rx="60" stroke="rgba(0,255,127,0.05)" stroke-width="1" fill="none" stroke-dasharray="4 4"/>
+    <rect x="55" y="55" width="70" height="70" rx="8" stroke="rgba(0,255,127,0.07)" stroke-width="1" fill="none"/>
+    <circle cx="90" cy="90" r="5" fill="rgba(0,255,127,0.3)"/>
+    <line x1="10" y1="90" x2="170" y2="90" stroke="rgba(0,255,127,0.04)" stroke-width="1"/>
+    <line x1="90" y1="10" x2="90" y2="170" stroke="rgba(0,255,127,0.04)" stroke-width="1"/>
+  </svg>
+</div>
+<div class="scroll-frame sf-4" id="sf4">
+  <svg viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg" width="260" height="260">
+    <polygon points="130,10 246,67 246,193 130,250 14,193 14,67" stroke="rgba(0,255,127,0.07)" stroke-width="1.5" fill="none"/>
+    <polygon points="130,35 222,82 222,178 130,225 38,178 38,82" stroke="rgba(0,255,127,0.04)" stroke-width="1" fill="none" stroke-dasharray="6 6"/>
+    <circle cx="130" cy="130" r="50" stroke="rgba(0,255,127,0.05)" stroke-width="1" fill="none"/>
+    <circle cx="130" cy="130" r="20" stroke="rgba(0,255,127,0.07)" stroke-width="1" fill="none"/>
+    <circle cx="130" cy="130" r="4" fill="rgba(0,255,127,0.25)"/>
+    <line x1="130" y1="10" x2="130" y2="250" stroke="rgba(0,255,127,0.03)" stroke-width="1"/>
+    <line x1="14" y1="130" x2="246" y2="130" stroke="rgba(0,255,127,0.03)" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-blob blob-1"></div>
+  <div class="hero-blob blob-2"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="badge-dot"></span>Available for freelance work</div>
+      <h1 class="hero-title">WEB<br><span class="green">DESIGNER</span></h1>
+      <p class="hero-desc">I am a long-established creator who turns ideas into cinematic digital experiences. I build things that users don't just see — they feel.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary"><span>View My Work</span><span>→</span></a>
+        <a href="#contact" class="btn-outline">Hire Me</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="person-placeholder">
+        <div class="person-glow"></div>
+        <svg class="person-svg" viewBox="0 0 200 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="50" rx="36" ry="40" fill="rgba(245,245,245,0.8)"/>
+          <path d="M64 42 Q70 8 100 10 Q130 8 136 42 Q118 22 100 24 Q82 22 64 42Z" fill="rgba(80,55,35,0.85)"/>
+          <rect x="90" y="86" width="20" height="16" rx="4" fill="rgba(245,245,245,0.75)"/>
+          <path d="M58 102 Q100 93 142 102 L150 210 Q100 222 50 210Z" fill="rgba(15,15,25,0.97)"/>
+          <path d="M88 100 L100 135 L112 100 Q100 96 88 100Z" fill="rgba(0,255,127,0.85)"/>
+          <path d="M58 108 Q28 135 26 185 Q34 190 44 184 Q54 150 68 122Z" fill="rgba(15,15,25,0.92)"/>
+          <path d="M142 108 Q172 135 174 185 Q166 190 156 184 Q146 150 132 122Z" fill="rgba(15,15,25,0.92)"/>
+          <ellipse cx="35" cy="187" rx="10" ry="8" fill="rgba(245,245,245,0.75)"/>
+          <ellipse cx="165" cy="187" rx="10" ry="8" fill="rgba(245,245,245,0.75)"/>
+          <rect x="72" y="208" width="24" height="112" rx="4" fill="rgba(25,25,40,0.97)"/>
+          <rect x="104" y="208" width="24" height="112" rx="4" fill="rgba(25,25,40,0.97)"/>
+          <rect x="68" y="313" width="30" height="15" rx="5" fill="rgba(5,5,5,0.95)"/>
+          <rect x="100" y="313" width="30" height="15" rx="5" fill="rgba(5,5,5,0.95)"/>
+          <line x1="58" y1="102" x2="72" y2="108" stroke="rgba(0,255,127,0.4)" stroke-width="2"/>
+          <line x1="142" y1="102" x2="128" y2="108" stroke="rgba(0,255,127,0.4)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="hero-tag-float tag-top"><div class="tag-num">300+</div><div class="tag-lbl">Instagram Followers</div></div>
+      <div class="hero-tag-float tag-bot"><div class="tag-num">90%</div><div class="tag-lbl">Satisfaction Rate</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><span class="stat-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M14 3L17.5 10 26 11.3l-6 5.8 1.4 8.2L14 21l-7.4 4.3 1.4-8.2L2 11.3 10.5 10z" stroke="rgba(0,255,127,0.85)" stroke-width="1.5" fill="rgba(0,255,127,0.12)"/></svg></span><div><div class="stat-val">10+</div><div class="stat-lbl">Projects Done</div></div></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-icon"><svg viewBox="0 0 28 28" fill="none"><circle cx="10" cy="10" r="4" stroke="rgba(0,255,127,0.85)" stroke-width="1.5" fill="rgba(0,255,127,0.12)"/><circle cx="20" cy="10" r="4" stroke="rgba(0,255,127,0.6)" stroke-width="1.5" fill="rgba(0,255,127,0.08)"/><path d="M2 22c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(0,255,127,0.85)" stroke-width="1.5" fill="none"/><path d="M20 14c3.2.5 6 2.8 6 6" stroke="rgba(0,255,127,0.5)" stroke-width="1.5" fill="none"/></svg></span><div><div class="stat-val">12+</div><div class="stat-lbl">Happy Clients</div></div></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-icon"><svg viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="18" rx="3" stroke="rgba(0,255,127,0.85)" stroke-width="1.5" fill="rgba(0,255,127,0.06)"/><line x1="4" y1="11" x2="24" y2="11" stroke="rgba(0,255,127,0.5)" stroke-width="1"/><line x1="9" y1="4" x2="9" y2="8" stroke="rgba(0,255,127,0.7)" stroke-width="1.5" stroke-linecap="round"/><line x1="19" y1="4" x2="19" y2="8" stroke="rgba(0,255,127,0.7)" stroke-width="1.5" stroke-linecap="round"/><rect x="8" y="15" width="4" height="4" rx="1" fill="rgba(0,255,127,0.4)"/><rect x="16" y="15" width="4" height="4" rx="1" fill="rgba(0,255,127,0.25)"/></svg></span><div><div class="stat-val">326</div><div class="stat-lbl">Working Hours</div></div></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-icon"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="rgba(0,255,127,0.6)" stroke-width="1.5" fill="rgba(0,255,127,0.04)"/><path d="M14 8v6l4 3" stroke="rgba(0,255,127,0.9)" stroke-width="1.5" stroke-linecap="round"/></svg></span><div><div class="stat-val">2+</div><div class="stat-lbl">Years Experience</div></div></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-icon"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="rgba(0,255,127,0.7)" stroke-width="1.5" fill="rgba(0,255,127,0.06)"/><path d="M8 14l4 4 8-8" stroke="rgba(0,255,127,1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><div class="stat-val">90%</div><div class="stat-lbl">Satisfaction Rate</div></div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="rvl">
+      <div class="sec-eye">About Me</div>
+      <h2 class="about-title">Are you looking for<br>creative design? Let me<br><span class="green">help you!</span></h2>
+      <p class="about-desc">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <ul class="about-list">
+        <li>Cinematic UI & Motion Design experiences</li>
+        <li>Full-Stack product development end-to-end</li>
+        <li>AI-powered intelligent web applications</li>
+        <li>Brand identity & design system creation</li>
+      </ul>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="#contact" class="btn-primary"><span>Hire Me Now</span><span>→</span></a>
+        <a href="#projects" class="btn-outline">View Portfolio</a>
+      </div>
+    </div>
+    <div class="rvr">
+      <div style="position:relative;">
+        <div class="about-img-wrap" style="padding:0;overflow:hidden;"><img src="about_developer.png" alt="Developer at work" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85) saturate(1.1);"><div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,127,0.08),transparent);"></div></div>
+        <div class="about-card-float"><div class="card-num">20+</div><div class="card-lbl">Top 5% Freelancer</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-inner">
+    <div class="rv">
+      <div class="sec-eye">What I Do</div>
+      <h2 class="sec-title">MY <span class="green">SERVICES</span></h2>
+      <p class="sec-sub">Code flows like light streams — each layer a distinct craft, each skill a layer of the story.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="sk-card rv" style="transition-delay:0s">
+        <img class="sk-img" src="skill_frontend.png" alt="Frontend Development">
+        <div class="sk-body">
+          <div class="sk-layer">Layer 01</div>
+          <div class="sk-name">FRONTEND</div>
+          <div class="sk-desc">Visual Craft — where emotion is encoded in pixels and motion tells the story beautifully.</div>
+          <div class="sk-tags"><span class="sk-tag">React</span><span class="sk-tag">Next.js</span><span class="sk-tag">GSAP</span><span class="sk-tag">WebGL</span></div>
+          <div class="sk-bar"><div class="sk-fill" data-w="0.92"></div></div>
+        </div>
+      </div>
+      <div class="sk-card rv" style="transition-delay:0.1s">
+        <img class="sk-img" src="skill_backend.png" alt="Backend Development">
+        <div class="sk-body">
+          <div class="sk-layer">Layer 02</div>
+          <div class="sk-name">BACKEND</div>
+          <div class="sk-desc">System Brain — scalable architecture and elegant APIs powering the narrative from within.</div>
+          <div class="sk-tags"><span class="sk-tag">Node.js</span><span class="sk-tag">Python</span><span class="sk-tag">PostgreSQL</span><span class="sk-tag">Docker</span></div>
+          <div class="sk-bar"><div class="sk-fill" data-w="0.85"></div></div>
+        </div>
+      </div>
+      <div class="sk-card rv" style="transition-delay:0.2s">
+        <img class="sk-img" src="skill_ai.png" alt="AI and Machine Learning">
+        <div class="sk-body">
+          <div class="sk-layer">Layer 03</div>
+          <div class="sk-name">AI / ML</div>
+          <div class="sk-desc">Intelligence Layer — weaving AI into products. From LLMs to generative experiences that wow.</div>
+          <div class="sk-tags"><span class="sk-tag">LangChain</span><span class="sk-tag">TensorFlow</span><span class="sk-tag">RAG</span><span class="sk-tag">Fine-tune</span></div>
+          <div class="sk-bar"><div class="sk-fill" data-w="0.78"></div></div>
+        </div>
+      </div>
+      <div class="sk-card rv" style="transition-delay:0.3s">
+        <img class="sk-img" src="skill_design.png" alt="UI Design">
+        <div class="sk-body">
+          <div class="sk-layer">Layer 04</div>
+          <div class="sk-name">UI DESIGN</div>
+          <div class="sk-desc">Emotion Layer — design as empathy made visible. The bridge between human psychology and pixels.</div>
+          <div class="sk-tags"><span class="sk-tag">Figma</span><span class="sk-tag">Motion</span><span class="sk-tag">Typography</span><span class="sk-tag">UX</span></div>
+          <div class="sk-bar"><div class="sk-fill" data-w="0.88"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="journey-inner">
+    <div class="rv">
+      <div class="sec-eye">My Story</div>
+      <h2 class="sec-title">THE <span class="green">JOURNEY</span></h2>
+      <p class="sec-sub">Every master was once a beginner. Four acts. One story. A timeline that moves like film.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item rv">
+        <div class="tl-spark">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="60" height="160">
+            <path d="M40 10 L52 60 L68 55 L36 110 L56 105 L28 190" stroke="rgba(0,255,127,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M40 10 L52 60 L68 55 L36 110 L56 105 L28 190" stroke="rgba(0,255,127,0.25)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="blur(4px)"/>
+            <circle cx="40" cy="10" r="4" fill="rgba(0,255,127,1)"/>
+            <circle cx="28" cy="190" r="5" fill="rgba(0,255,127,0.6)"/>
+          </svg>
+          <span class="tl-act-label">Act I — Learning</span>
+        </div>
+        <div>
+          <div class="tl-icon-wrap"><img src="journey_spark.png" alt="The Spark" style="width:100%;max-width:320px;height:140px;object-fit:cover;border-radius:8px;filter:brightness(0.8) saturate(1.2);margin-bottom:0.6rem;display:block;"></div>
+          <div class="tl-title">THE SPARK</div><p class="tl-desc">The first "Hello, World." The realization that a few lines of code could create entire worlds. Curiosity became obsession. Stayed up till 4am learning HTML, CSS, JavaScript.</p>
+        </div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:0.1s">
+        <div class="tl-spark">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="60" height="160">
+            <path d="M20 10 L60 10 L35 70 L65 70 L20 190" stroke="rgba(0,255,127,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M20 10 L60 10 L35 70 L65 70 L20 190" stroke="rgba(0,255,127,0.2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="blur(5px)"/>
+            <circle cx="20" cy="10" r="4" fill="rgba(0,255,127,1)"/>
+            <circle cx="20" cy="190" r="5" fill="rgba(0,255,127,0.55)"/>
+          </svg>
+          <span class="tl-act-label">Act II — Building</span>
+        </div>
+        <div>
+          <div class="tl-icon-wrap"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;margin-bottom:0.5rem;display:block;"><rect x="4" y="28" width="8" height="16" rx="2" fill="rgba(0,255,127,0.7)"/><rect x="16" y="20" width="8" height="24" rx="2" fill="rgba(0,255,127,0.8)"/><rect x="28" y="12" width="8" height="32" rx="2" fill="rgba(0,255,127,0.9)"/><circle cx="38" cy="8" r="6" fill="rgba(0,255,127,1)"/></svg></div>
+          <div class="tl-title">THE HUSTLE</div><p class="tl-desc">Projects shipped at midnight. Coffee-fueled sprints. Learning by breaking things, then fixing them better. First freelance clients. First real money from code.</p>
+        </div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:0.2s">
+        <div class="tl-spark">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="60" height="160">
+            <path d="M40 10 L20 80 L50 75 L10 190" stroke="rgba(0,255,127,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M40 10 L20 80 L50 75 L10 190" stroke="rgba(0,255,127,0.2)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="blur(5px)"/>
+            <circle cx="40" cy="10" r="4" fill="rgba(0,255,127,1)"/>
+            <circle cx="10" cy="190" r="5" fill="rgba(0,255,127,0.55)"/>
+            <circle cx="50" cy="75" r="3" fill="rgba(0,255,127,0.8)"/>
+          </svg>
+          <span class="tl-act-label">Act III — Failing</span>
+        </div>
+        <div>
+          <div class="tl-icon-wrap"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;margin-bottom:0.5rem;display:block;"><path d="M24 4L44 40H4L24 4Z" stroke="rgba(0,255,127,0.8)" stroke-width="2" fill="rgba(0,255,127,0.05)"/><line x1="24" y1="16" x2="24" y2="28" stroke="rgba(0,255,127,0.9)" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="34" r="2" fill="rgba(0,255,127,0.9)"/></svg></div>
+          <div class="tl-title">THE CRASH</div><p class="tl-desc">Projects that didn't launch. Ideas that flopped. Clients who disappeared. But every scar became a lesson, every setback a superpower. Emerged stronger and sharper.</p>
+        </div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:0.3s">
+        <div class="tl-spark">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="60" height="160">
+            <path d="M40 10 L55 55 L70 50 L45 100 L68 95 L30 160 L50 155 L20 190" stroke="rgba(0,255,127,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M40 10 L55 55 L70 50 L45 100 L68 95 L30 160 L50 155 L20 190" stroke="rgba(0,255,127,0.22)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="blur(5px)"/>
+            <circle cx="40" cy="10" r="5" fill="rgba(0,255,127,1)"/>
+            <circle cx="20" cy="190" r="6" fill="rgba(0,255,127,0.7)"/>
+          </svg>
+          <span class="tl-act-label">Act IV — Mastery</span>
+        </div>
+        <div>
+          <div class="tl-icon-wrap"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;margin-bottom:0.5rem;display:block;"><polygon points="24,4 28,18 44,18 31,28 36,44 24,34 12,44 17,28 4,18 20,18" fill="rgba(0,255,127,0.15)" stroke="rgba(0,255,127,0.9)" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="rgba(0,255,127,0.7)"/></svg></div>
+          <div class="tl-title">THE MASTERY</div><p class="tl-desc">Where skill meets vision. Cinematic design. AI-powered products. The moment craft becomes art, and work becomes legacy. Building things the world hasn't seen yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-inner">
+    <div class="rv">
+      <div class="sec-eye">My Work</div>
+      <h2 class="sec-title">FEATURED <span class="green">PROJECTS</span></h2>
+      <p class="sec-sub">Each project is a cinematic experience. Each one a story. Hover to enter the scene.</p>
+    </div>
+    <div class="proj-grid">
+      <!-- P1: LUMINARY OS -->
+      <div class="pcard pcard-lg rv">
+        <div class="pvis">
+          <div class="pscene">
+            <div class="pscene-grid"></div>
+            <div class="pscene-orb" style="width:280px;height:280px;opacity:0.18;top:-60px;right:-60px;background:radial-gradient(circle,#00ff7f,transparent);"></div>
+            <div class="pscene-orb" style="width:150px;height:150px;opacity:0.1;bottom:0;left:0;background:radial-gradient(circle,#0040ff,transparent);"></div>
+            <div class="pscene-ring" style="width:180px;height:180px;top:50%;left:55%;transform:translate(-50%,-50%);animation-delay:0s;"></div>
+            <div class="pscene-ring" style="width:260px;height:260px;top:50%;left:55%;transform:translate(-50%,-50%);animation-delay:1.5s;"></div>
+            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.35;" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" fill="none"><rect x="20" y="20" width="200" height="120" rx="6" stroke="rgba(0,255,127,0.5)" stroke-width="1.2" fill="rgba(0,255,127,0.04)"/><line x1="20" y1="38" x2="220" y2="38" stroke="rgba(0,255,127,0.3)" stroke-width="1"/><circle cx="32" cy="29" r="3" fill="rgba(0,255,127,0.6)"/><circle cx="44" cy="29" r="3" fill="rgba(255,200,0,0.4)"/><circle cx="56" cy="29" r="3" fill="rgba(255,70,70,0.4)"/><rect x="30" y="48" width="80" height="6" rx="3" fill="rgba(0,255,127,0.3)"/><rect x="30" y="60" width="160" height="4" rx="2" fill="rgba(255,255,255,0.1)"/><rect x="30" y="70" width="140" height="4" rx="2" fill="rgba(255,255,255,0.07)"/><rect x="30" y="80" width="120" height="4" rx="2" fill="rgba(255,255,255,0.05)"/><rect x="240" y="20" width="240" height="240" rx="8" stroke="rgba(0,255,127,0.25)" stroke-width="1" fill="rgba(0,255,127,0.02)"/><rect x="255" y="40" width="80" height="50" rx="4" fill="rgba(0,255,127,0.08)" stroke="rgba(0,255,127,0.2)" stroke-width="1"/><rect x="345" y="40" width="120" height="50" rx="4" fill="rgba(0,255,127,0.05)" stroke="rgba(0,255,127,0.15)" stroke-width="1"/><rect x="255" y="100" width="210" height="140" rx="4" fill="rgba(0,255,127,0.04)" stroke="rgba(0,255,127,0.12)" stroke-width="1"/></svg>
+          </div>
+        </div>
+        <div class="pline"></div>
+        <div class="pbody"><div class="pgenre">Experience 01 — SaaS Platform</div><div class="pname">LUMINARY OS</div><p class="pdesc">A next-generation SaaS designed as a digital OS. Real-time collaboration, cinematic onboarding, AI-assisted workflows that feel like the future.</p><div class="ptech"><span class="ptag">React</span><span class="ptag">Node.js</span><span class="ptag">WebSockets</span><span class="ptag">AI</span></div></div>
+        <div class="pfooter"><a href="#" class="plink">View Live →</a><span class="pyear">2024</span></div>
+      </div>
+      <!-- P2: NARRATIVE AI -->
+      <div class="pcard rv" style="transition-delay:0.1s">
+        <div class="pvis">
+          <div class="pscene" style="background:linear-gradient(135deg,#0e0518,#0a0314);">
+            <div class="pscene-orb" style="width:200px;height:200px;opacity:0.2;top:-40px;left:-40px;background:radial-gradient(circle,#9b59ff,transparent);"></div>
+            <div class="pscene-ring" style="width:120px;height:120px;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:0.5s;border-color:rgba(155,89,255,0.2);"></div>
+            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.5;" viewBox="0 0 240 180" fill="none"><circle cx="120" cy="70" r="30" stroke="rgba(155,89,255,0.5)" stroke-width="1.5" fill="rgba(155,89,255,0.04)"/><circle cx="120" cy="70" r="12" fill="rgba(155,89,255,0.3)"/><line x1="120" y1="100" x2="120" y2="130" stroke="rgba(155,89,255,0.3)" stroke-width="1.5"/><line x1="95" y1="125" x2="145" y2="125" stroke="rgba(155,89,255,0.2)" stroke-width="1.5"/><rect x="30" y="140" width="180" height="5" rx="2.5" fill="rgba(155,89,255,0.15)"/><rect x="30" y="150" width="140" height="5" rx="2.5" fill="rgba(155,89,255,0.1)"/><rect x="30" y="160" width="110" height="5" rx="2.5" fill="rgba(155,89,255,0.07)"/></svg>
+          </div>
+        </div>
+        <div class="pline"></div>
+        <div class="pbody"><div class="pgenre">Experience 02 — AI Tool</div><div class="pname">NARRATIVE AI</div><p class="pdesc">An AI writing companion that understands story structure, emotional arcs, and narrative beats.</p><div class="ptech"><span class="ptag">LangChain</span><span class="ptag">GPT-4</span><span class="ptag">Next.js</span></div></div>
+        <div class="pfooter"><a href="#" class="plink">View Live →</a><span class="pyear">2024</span></div>
+      </div>
+      <!-- P3: PULSE SOCIAL -->
+      <div class="pcard rv" style="transition-delay:0.15s">
+        <div class="pvis">
+          <div class="pscene" style="background:linear-gradient(135deg,#061a0e,#030f08);">
+            <div class="pscene-orb" style="width:160px;height:160px;opacity:0.22;top:-20px;right:-20px;background:radial-gradient(circle,#00ff7f,transparent);"></div>
+            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.5;" viewBox="0 0 240 180" fill="none"><rect x="80" y="20" width="80" height="140" rx="12" stroke="rgba(0,255,127,0.5)" stroke-width="1.5" fill="rgba(0,255,127,0.03)"/><rect x="88" y="32" width="64" height="100" rx="4" fill="rgba(0,255,127,0.06)" stroke="rgba(0,255,127,0.2)" stroke-width="1"/><circle cx="120" cy="155" r="5" fill="rgba(0,255,127,0.4)"/><line x1="105" y1="26" x2="135" y2="26" stroke="rgba(0,255,127,0.4)" stroke-width="2" stroke-linecap="round"/><rect x="92" y="38" width="56" height="30" rx="3" fill="rgba(0,255,127,0.08)"/><rect x="92" y="75" width="40" height="5" rx="2.5" fill="rgba(0,255,127,0.2)"/><rect x="92" y="85" width="56" height="4" rx="2" fill="rgba(0,255,127,0.1)"/></svg>
+          </div>
+        </div>
+        <div class="pline"></div>
+        <div class="pbody"><div class="pgenre">Experience 03 — Mobile App</div><div class="pname">PULSE SOCIAL</div><p class="pdesc">A social platform with cinematic story feeds and immersive AR interactions.</p><div class="ptech"><span class="ptag">React Native</span><span class="ptag">Firebase</span><span class="ptag">AR</span></div></div>
+        <div class="pfooter"><a href="#" class="plink">View Live →</a><span class="pyear">2023</span></div>
+      </div>
+      <!-- P4: FLOWSTATE -->
+      <div class="pcard rv" style="transition-delay:0.1s">
+        <div class="pvis">
+          <div class="pscene" style="background:linear-gradient(135deg,#1a0f04,#0e0804);">
+            <div class="pscene-orb" style="width:160px;height:160px;opacity:0.18;bottom:-30px;right:-30px;background:radial-gradient(circle,#ff8c00,transparent);"></div>
+            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.5;" viewBox="0 0 240 180" fill="none"><polyline points="20,140 50,90 80,110 110,60 140,80 170,40 200,55 220,30" stroke="rgba(255,140,0,0.6)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="90" r="3" fill="rgba(255,140,0,0.7)"/><circle cx="110" cy="60" r="3" fill="rgba(255,140,0,0.7)"/><circle cx="170" cy="40" r="3" fill="rgba(255,140,0,0.7)"/><rect x="20" y="155" width="200" height="1" fill="rgba(255,255,255,0.08)"/></svg>
+          </div>
+        </div>
+        <div class="pline"></div>
+        <div class="pbody"><div class="pgenre">Experience 04 — Dev Tool</div><div class="pname">FLOWSTATE</div><p class="pdesc">Developer productivity. Real-time code metrics, flow state tracking, and beautiful analytics.</p><div class="ptech"><span class="ptag">Electron</span><span class="ptag">D3.js</span><span class="ptag">Python</span></div></div>
+        <div class="pfooter"><a href="#" class="plink">View Live →</a><span class="pyear">2023</span></div>
+      </div>
+      <!-- P5: COSMOS 3D -->
+      <div class="pcard pcard-lg rv" style="transition-delay:0.2s">
+        <div class="pvis">
+          <div class="pscene" style="background:radial-gradient(ellipse at center,#05052a 0%,#020210 100%);">
+            <div class="pscene-orb" style="width:300px;height:300px;opacity:0.15;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#4400ff,transparent);"></div>
+            <div class="pscene-ring" style="width:160px;height:160px;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:0;border-color:rgba(68,0,255,0.2);"></div>
+            <div class="pscene-ring" style="width:240px;height:240px;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:1s;border-color:rgba(68,0,255,0.12);"></div>
+            <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" fill="none"><circle cx="250" cy="140" r="5" fill="rgba(255,255,255,0.9)"/><circle cx="120" cy="70" r="3" fill="rgba(0,255,127,0.7)"/><circle cx="380" cy="80" r="2.5" fill="rgba(0,255,127,0.5)"/><circle cx="80" cy="180" r="2" fill="rgba(255,255,255,0.4)"/><circle cx="420" cy="190" r="3" fill="rgba(100,180,255,0.5)"/><circle cx="300" cy="50" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="180" cy="220" r="2.5" fill="rgba(255,255,255,0.3)"/><line x1="250" y1="140" x2="120" y2="70" stroke="rgba(0,255,127,0.15)" stroke-width="1"/><line x1="250" y1="140" x2="380" y2="80" stroke="rgba(0,255,127,0.12)" stroke-width="1"/><line x1="250" y1="140" x2="80" y2="180" stroke="rgba(100,180,255,0.1)" stroke-width="1"/><line x1="250" y1="140" x2="420" y2="190" stroke="rgba(100,180,255,0.12)" stroke-width="1"/><circle cx="250" cy="140" r="60" stroke="rgba(68,0,255,0.12)" stroke-width="1" fill="none" stroke-dasharray="4 6"/><circle cx="250" cy="140" r="100" stroke="rgba(68,0,255,0.07)" stroke-width="1" fill="none" stroke-dasharray="2 8"/></svg>
+          </div>
+        </div>
+        <div class="pline"></div>
+        <div class="pbody"><div class="pgenre">Experience 05 — 3D Web</div><div class="pname">COSMOS 3D</div><p class="pdesc">An immersive 3D data visualization platform. WebGL-powered. Real-time. Breathtaking. Turns complex data into navigable universes that tell their own story.</p><div class="ptech"><span class="ptag">Three.js</span><span class="ptag">WebGL</span><span class="ptag">GLSL</span><span class="ptag">D3</span></div></div>
+        <div class="pfooter"><a href="#" class="plink">View Live →</a><span class="pyear">2024</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="cblob"></div>
+  <div class="contact-inner rv">
+    <div class="c-eye">Final Scene</div>
+    <h2 class="c-title">LET'S BUILD<br>SOMETHING<br><span class="green">UNFORGETTABLE</span></h2>
+    <p class="c-sub">The best stories are co-authored. Your vision + my craft = something the world hasn't seen yet.</p>
+    <div class="c-actions">
+      <a href="#" class="btn-primary" onclick="openPopup(event)"><span>Start A Project</span><span>→</span></a>
+      <a href="myresume11-02-57.pdf" class="btn-outline" download="myresume11-02-57.pdf">Download CV</a>
+    </div>
+    <div class="social-row">
+      <a href="https://github.com/priyanshgameti020-hub" class="slink" target="_blank">GitHub ↗</a>
+      <a href="https://x.com/priyansh031207" class="slink" target="_blank">Twitter ↗</a>
+      <a href="https://www.instagram.com/priyansh._.g/"  target="_blank" class="slink">Instagram ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">PRIYANSH GAMETI</div>
+    <div class="footer-copy">© 2026 Priyansh Gameti. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#about">About</a><a href="#skills">Services</a>
+      <a href="#projects">Projects</a><a href="#" onclick="openContactModal(event)">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- START A PROJECT POPUP (existing) -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box" style="background:rgba(10,10,10,0.95);border:1px solid rgba(0,255,127,0.15);border-radius:16px;padding:2rem;position:relative;">
+    <div class="close-btn" onclick="closePopup()" style="position:absolute;top:1rem;right:1rem;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;">✕</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.05em;margin-bottom:0.3rem;">START A <span style="color:var(--green)">PROJECT</span></div>
+    <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:0.04em;">Tell me about your idea and I'll get back to you.</div>
+    <form style="display:flex;flex-direction:column;gap:0.9rem;">
+      <input class="cform-input" type="text" placeholder="Your Name" required>
+      <input class="cform-input" type="email" placeholder="Your Email" required>
+      <input class="cform-input" type="text" placeholder="Project Type">
+      <textarea class="cform-input" placeholder="Describe your idea" style="resize:none;height:80px;"></textarea>
+      <button type="submit" class="send-btn" style="padding:0.85rem;border-radius:8px;font-size:0.85rem;letter-spacing:0.05em;">Send Request</button>
+    </form>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="popup-overlay" id="contactModal">
+  <div class="cmodal">
+    <div class="cmodal-header">
+      <div class="cmodal-close" onclick="closeContactModal()">✕</div>
+      <div class="cmodal-avatar">PG</div>
+      <div class="cmodal-title">LET'S <span>CONNECT</span></div>
+      <div class="cmodal-sub">Available for freelance &amp; collaborations</div>
+      <div class="cmodal-chips">
+        <div class="cchip">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 4l6 5 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
+          priyanshgameti020@gmail.com
+        </div>
+        <div class="cchip">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 8a3 3 0 006 0" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="5" r="1" fill="currentColor"/></svg>
+          Open to work
+        </div>
+      </div>
+    </div>
+    <div class="cmodal-body">
+      <form class="cmodal-form" onsubmit="return false;">
+        <div class="cform-row">
+          <div class="cform-field">
+            <label class="cform-label">Name</label>
+            <input class="cform-input" type="text" placeholder="Your name" required>
+          </div>
+          <div class="cform-field">
+            <label class="cform-label">Email</label>
+            <input class="cform-input" type="email" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="cform-field">
+          <label class="cform-label">Subject</label>
+          <input class="cform-input" type="text" placeholder="Project / Collaboration / Hire">
+        </div>
+        <div class="cform-field">
+          <label class="cform-label">Message</label>
+          <textarea class="cform-input" placeholder="Tell me about your project or idea..."></textarea>
+        </div>
+        <button type="submit" class="cmodal-submit"><span>Send Message →</span></button>
+      </form>
+      <div class="cmodal-divider"></div>
+      <div class="cmodal-social">
+        <a href="https://github.com/priyanshgameti020-hub" class="cmod-slink" target="_blank">GitHub ↗</a>
+        <a href="https://x.com/priyansh031207" class="cmod-slink" target="_blank">Twitter ↗</a>
+        <a href="https://www.instagram.com/priyansh._.g/" class="cmod-slink" target="_blank">Instagram ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Cursor
+const dot = document.getElementById('curDot'), ring = document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+(function a(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(a); })();
+
+// Navbar
+window.addEventListener('scroll', () => document.getElementById('nb').classList.toggle('scrolled', scrollY>60));
+
+// Mobile nav
+const mob = document.getElementById('mob');
+function openMob(){ mob.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeMob(){ mob.classList.remove('open'); document.body.style.overflow=''; }
+
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('v');
+      e.target.querySelectorAll('.sk-fill').forEach(f => {
+        f.style.transform = `scaleX(${f.dataset.w||1})`;
+      });
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rv,.rvl,.rvr,.sk-card').forEach(el => obs.observe(el));
+
+// Mouse parallax on hero
+document.getElementById('hero').addEventListener('mousemove', e => {
+  const x=(e.clientX/innerWidth-0.5)*15, y=(e.clientY/innerHeight-0.5)*15;
+  document.querySelector('.blob-1').style.transform=`translateY(-50%) translate(${x}px,${y}px)`;
+});
+
+// Scroll-rotating SVG frames
+const frames = [
+  { el: document.getElementById('sf1'), speed: 0.04,  dir: 1  },
+  { el: document.getElementById('sf2'), speed: 0.07,  dir: -1 },
+  { el: document.getElementById('sf3'), speed: 0.055, dir: 1  },
+  { el: document.getElementById('sf4'), speed: 0.035, dir: -1 },
+];
+frames.forEach(f => { if(f.el) f.el.classList.add('visible'); });
+window.addEventListener('scroll', () => {
+  const s = window.scrollY;
+  frames.forEach(f => {
+    if(!f.el) return;
+    const deg = s * f.speed * f.dir;
+    f.el.style.transform = `rotate(${deg}deg)`;
+  });
+}, { passive: true });
+
+// Make pvis fill the card visual area
+document.querySelectorAll('.pscene').forEach(sc => {
+  sc.parentElement.style.position = 'relative';
+});
+
+function openPopup(e){
+  e.preventDefault();
+  document.getElementById('popup').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closePopup(){
+  document.getElementById('popup').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+function openContactModal(e){
+  e.preventDefault();
+  document.getElementById('contactModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeContactModal(){
+  document.getElementById('contactModal').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+// Close modals on overlay click
+document.getElementById('contactModal').addEventListener('click', function(e){
+  if(e.target === this) closeContactModal();
+});
+document.getElementById('popup').addEventListener('click', function(e){
+  if(e.target === this) closePopup();
+});
+</script>
+</body>
+</html>
