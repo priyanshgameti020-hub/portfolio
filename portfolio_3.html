@@ -236,6 +236,18 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2
 /* REVEAL */
 .rv { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .rv.v { opacity: 1; transform: translateY(0); }
+
+/* TYPING CURSOR */
+.type-cursor {
+  display: inline-block;
+  width: 3px;
+  background: var(--green);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursorBlink 0.75s step-end infinite;
+  border-radius: 1px;
+}
+@keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
 .rvl { opacity: 0; transform: translateX(-30px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .rvl.v { opacity: 1; transform: translateX(0); }
 .rvr { opacity: 0; transform: translateX(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -849,8 +861,8 @@ textarea.cform-input{resize:none;height:90px;}
   <div class="cblob"></div>
   <div class="contact-inner rv">
     <div class="c-eye">Final Scene</div>
-    <h2 class="c-title">LET'S BUILD<br>SOMETHING<br><span class="green">UNFORGETTABLE</span></h2>
-    <p class="c-sub">The best stories are co-authored. Your vision + my craft = something the world hasn't seen yet.</p>
+    <h2 class="c-title" id="cTitle"></h2>
+    <p class="c-sub" id="cSub" style="opacity:0;">The best stories are co-authored. Your vision + my craft = something the world hasn't seen yet.</p>
     <div class="c-actions">
       <a href="#" class="btn-primary" onclick="openPopup(event)"><span>Start A Project</span><span>→</span></a>
       <a href="myresume11-02-57.pdf" class="btn-outline" download="myresume11-02-57.pdf">Download CV</a>
@@ -996,6 +1008,81 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('.pscene').forEach(sc => {
   sc.parentElement.style.position = 'relative';
 });
+
+// Typing animation for Final Scene
+(function(){
+  const titleEl = document.getElementById('cTitle');
+  const subEl   = document.getElementById('cSub');
+  if(!titleEl || !subEl) return;
+
+  // We'll build the title HTML in segments so green span is preserved
+  const titleSegments = [
+    { text: "LET'S BUILD", tag: null },
+    { text: 'SOMETHING', tag: null },
+    { text: 'UNFORGETTABLE', tag: 'green' }
+  ];
+  const subText = subEl.textContent.trim();
+  subEl.textContent = '';
+
+  let started = false;
+
+  function typeText(el, text, speed, onDone) {
+    let i = 0;
+    // Create or reuse cursor inside el
+    const cursor = document.createElement('span');
+    cursor.className = 'type-cursor';
+    cursor.style.height = '0.85em';
+    el.appendChild(cursor);
+    function tick() {
+      if(i < text.length) {
+        cursor.insertAdjacentText('beforebegin', text[i++]);
+        setTimeout(tick, speed);
+      } else {
+        cursor.remove();
+        if(onDone) onDone();
+      }
+    }
+    tick();
+  }
+
+  function typeTitleSegments(segments, idx, onDone) {
+    if(idx >= segments.length) { onDone && onDone(); return; }
+    const seg = segments[idx];
+    // Add line break before segments after first
+    if(idx > 0) titleEl.appendChild(document.createElement('br'));
+    let container;
+    if(seg.tag === 'green') {
+      container = document.createElement('span');
+      container.className = 'green';
+      titleEl.appendChild(container);
+    } else {
+      container = titleEl;
+    }
+    // Estimate char speed so whole title feels snappy
+    const speed = 55;
+    typeText(container, seg.text, speed, () => {
+      typeTitleSegments(segments, idx + 1, onDone);
+    });
+  }
+
+  function startTyping() {
+    if(started) return;
+    started = true;
+    typeTitleSegments(titleSegments, 0, () => {
+      // After title done, fade in sub and type it
+      subEl.style.transition = 'opacity 0.3s';
+      subEl.style.opacity = '1';
+      setTimeout(() => typeText(subEl, subText, 28, null), 200);
+    });
+  }
+
+  // Trigger when contact section enters view
+  const contactSection = document.getElementById('contact');
+  const tyObs = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting) { startTyping(); tyObs.disconnect(); }
+  }, { threshold: 0.25 });
+  tyObs.observe(contactSection);
+})();
 
 function openPopup(e){
   e.preventDefault();
