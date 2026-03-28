@@ -892,11 +892,11 @@ textarea.cform-input{resize:none;height:90px;}
     <div class="close-btn" onclick="closePopup()" style="position:absolute;top:1rem;right:1rem;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;">✕</div>
     <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.05em;margin-bottom:0.3rem;">START A <span style="color:var(--green)">PROJECT</span></div>
     <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:0.04em;">Tell me about your idea and I'll get back to you.</div>
-    <form style="display:flex;flex-direction:column;gap:0.9rem;">
-      <input class="cform-input" type="text" placeholder="Your Name" required>
-      <input class="cform-input" type="email" placeholder="Your Email" required>
-      <input class="cform-input" type="text" placeholder="Project Type">
-      <textarea class="cform-input" placeholder="Describe your idea" style="resize:none;height:80px;"></textarea>
+    <form style="display:flex;flex-direction:column;gap:0.9rem;" id="contactForm">
+      <input class="cform-input" type="text" name="name" placeholder="Your Name" required>
+      <input class="cform-input" type="email" name="email" placeholder="Your Email" required>
+      <input class="cform-input" type="text" name="project" placeholder="Project Type">
+      <textarea class="cform-input" name="message" placeholder="Describe your idea" style="resize:none;height:80px;"></textarea>
       <button type="submit" class="send-btn" style="padding:0.85rem;border-radius:8px;font-size:0.85rem;letter-spacing:0.05em;">Send Request</button>
     </form>
   </div>
@@ -943,6 +943,7 @@ textarea.cform-input{resize:none;height:90px;}
         </div>
         <button type="submit" class="cmodal-submit"><span>Send Message →</span></button>
       </form>
+      
       <div class="cmodal-divider"></div>
       <div class="cmodal-social">
         <a href="https://github.com/priyanshgameti020-hub" class="cmod-slink" target="_blank">GitHub ↗</a>
@@ -1111,6 +1112,40 @@ document.getElementById('contactModal').addEventListener('click', function(e){
 document.getElementById('popup').addEventListener('click', function(e){
   if(e.target === this) closePopup();
 });
+  <form id="contactForm">
+
+<input type="text" name="name" placeholder="Name" required>
+
+<input type="email" name="email" placeholder="Email">
+
+<input type="text" name="phone" placeholder="Phone">
+
+<textarea name="message" placeholder="Message"></textarea>
+
+<button type="submit">Submit</button>
+
+</form>
+
+
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbziUxPEOLYynVzyRbDhatizbWd56oz_E7TahZWwbDTPBNhAHLjuvlYinWW3SB-HbAylnQ/exec";
+
+document.getElementById("contactForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const formData = new FormData(this);
+
+fetch(scriptURL, {
+method: "POST",
+body: JSON.stringify(Object.fromEntries(formData))
+})
+
+.then(response => alert("Form submitted successfully"))
+.catch(error => alert("Error submitting form"));
+
+});
+
 </script>
 </body>
 </html>
