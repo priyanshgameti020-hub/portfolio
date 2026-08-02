@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Partners and Media Mentions</title>
+<style>
+
+/* ─── Reset ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #f5f5f5;
+  color: #444;
+}
+
+/* ─── Section wrapper ────────────────────────────── */
+.partners-section {
+  background: #ffffff;
+  padding: 50px 0 60px;
+  overflow: hidden;
+}
+
+/* ─── Header text ────────────────────────────────── */
+.section-eyebrow {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+}
+
+.section-heading {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 48px;
+  line-height: 1.2;
+}
+.section-heading .h-blue   { color: #3ab4f2; }
+.section-heading .h-gray   { color: #555;    }
+.section-heading .h-navy   { color: #1b4f72; }
+
+/* ─── Top row: 3 columns ─────────────────────────── */
+.top-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 44px;
+  padding: 0 20px;
+}
+
+.top-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* vertical separator between top cols */
+.top-col + .top-col {
+  border-left: 1px solid #e8e8e8;
+}
+
+/* ─── Mid and Bottom rows: 2 columns ──────────────── */
+.two-col-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 44px;
+  padding: 0 20px;
+}
+
+.two-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.two-col + .two-col {
+  border-left: 1px solid #e8e8e8;
+}
+
+/* ─── Column label — STATIC, never moves ────────── */
+.col-label {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #999;
+  letter-spacing: 0.015em;
+  text-align: center;
+  margin-bottom: 22px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Marquee container ──────────────────────────── */
+.marquee-outer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* soft fade at edges */
+.marquee-outer::before,
+.marquee-outer::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 40px;
+  z-index: 3;
+  pointer-events: none;
+}
+.marquee-outer::before {
+  left: 0;
+  background: linear-gradient(to right, #fff 0%, transparent 100%);
+}
+.marquee-outer::after {
+  right: 0;
+  background: linear-gradient(to left, #fff 0%, transparent 100%);
+}
+
+/* the scrolling belt */
+.marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;         /* shrink-to-fit */
+  animation: scroll-rtl 18s linear infinite;
+  will-change: transform;
+}
+
+/* pause on hover */
+.marquee-outer:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-rtl {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }   /* -50% = one copy width */
+}
+
+/* ─── Individual logo slots ──────────────────────── */
+.logo-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 14px;
+  flex-shrink: 0;
+}
+
+/* ─── Logo component styles ──────────────────────── */
+
+/* ── Circular university seal ── */
+.logo-seal {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6px;
+  color: #555;
+  text-align: center;
+  font-weight: 700;
+  padding: 4px;
+  background: #f8f8f8;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+/* ── Nirma University shield ── */
+.logo-nirma {
+  height: 34px;
+  width: 34px;
+  background: linear-gradient(160deg, #8B0000 0%, #9b1c1c 45%, #002244 45%, #003070 100%);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1px;
+  padding: 3px;
+}
+.logo-nirma .n1 { font-size: 9px; font-weight: 900; color: #fff; letter-spacing: 0.06em; line-height: 1; }
+.logo-nirma .n2 { font-size: 4px;  font-weight: 600; color: rgba(255,255,255,.85); letter-spacing: 0.09em; text-align: center; line-height: 1.35; }
+
+/* ── CCI ── */
+.logo-cci {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 34px;
+}
+.logo-cci .cc-big  { font-size: 24px; font-weight: 900; color: #c0392b; font-style: italic; line-height: 1; }
+.logo-cci .cc-text { font-size: 5px; color: #555; max-width: 60px; line-height: 1.35; font-weight: 500; }
+
+/* ── MSME ── */
+.logo-msme {
+  display: flex; flex-direction: column; align-items: flex-start;
+  height: 34px; justify-content: center;
+}
+.logo-msme .mm1 { font-size: 15px; font-weight: 900; color: #111; letter-spacing: -1px; line-height: 1; }
+.logo-msme .mm2 { font-size: 5px; color: #444; letter-spacing: 0.06em; font-weight: 500; line-height: 1.45; }
+
+/* ── #startupindia ── */
+.logo-startup {
+  font-size: 15px; font-weight: 900; letter-spacing: 0.01em; white-space: nowrap;
+}
+.logo-startup .sc0 { color: #f39c12; }
+.logo-startup .sc1 { color: #27ae60; }
+.logo-startup .sc2 { color: #2980b9; }
+.logo-startup .sc3 { color: #c0392b; }
+.logo-startup .sc4 { color: #555; }
+
+/* ── YourStory ── */
+.logo-yourstory {
+  background: #c0392b; color: #fff;
+  font-size: 9px; font-weight: 900;
+  padding: 5px 8px; border-radius: 3px;
+  letter-spacing: 0.05em; white-space: nowrap;
+  display: flex; align-items: center;
+}
+
+/* ── Outlook ── */
+.logo-outlook {
+  font-size: 20px; font-weight: 900; color: #c0392b; font-style: italic;
+}
+
+/* ── Business Standard ── */
+.logo-bizstd {
+  display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1;
+}
+.logo-bizstd span { font-size: 10px; font-weight: 800; color: #222; letter-spacing: 0.01em; }
+
+/* ── APN ── */
+.logo-apn {
+  font-size: 17px; font-weight: 900; color: #2471a3;
+  letter-spacing: 0.05em;
+  border: 2px solid #2471a3; padding: 3px 8px; border-radius: 3px;
+}
+
+/* ── Podar ── */
+.logo-podar {
+  height: 34px; padding: 2px 6px;
+  background: #fff; border: 2px solid #1565c0; border-radius: 3px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.logo-podar .pp1 { font-size: 10px; font-weight: 900; color: #1565c0; letter-spacing: 0.04em; line-height: 1; }
+.logo-podar .pp2 { font-size: 4.5px; color: #1565c0; font-weight: 600; line-height: 1.35; text-align: center; }
+
+/* ── Circular school seal ── */
+.logo-circle-school {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: radial-gradient(circle, #1a6bb5, #0d47a1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5.5px; color: #fff; font-weight: 700;
+  text-align: center; padding: 4px; line-height: 1.3;
+}
+
+/* ── Cygnus ── */
+.logo-cygnus { display: flex; align-items: center; gap: 5px; height: 34px; }
+.logo-cygnus svg { width: 24px; height: 24px; }
+.logo-cygnus .ct1 { font-size: 11px; font-weight: 700; color: #2e7d32; line-height: 1; }
+.logo-cygnus .ct2 { font-size: 6.5px; color: #666; line-height: 1.3; }
+
+/* ── St. Kabir ── */
+.logo-stkabir {
+  width: 34px; height: 34px;
+  border: 2px solid #6d4c41; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 5px; color: #4e342e; font-weight: 700;
+  text-align: center; padding: 4px; line-height: 1.3; background: #fafafa;
+}
+
+/* ── Symbiosis ── */
+.logo-symbiosis { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.logo-symbiosis .si {
+  width: 24px; height: 24px; background: #c0392b; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 900; color: #fff;
+}
+.logo-symbiosis .st { font-size: 7px; font-weight: 700; color: #c0392b; letter-spacing: 0.07em; }
+
+/* ── Amity ── */
+.logo-amity { display: flex; align-items: center; gap: 6px; }
+.logo-amity .ai {
+  width: 26px; height: 26px;
+  background: radial-gradient(circle, #fdd835, #f9a825);
+  border-radius: 50%; border: 2px solid #1565c0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7px; font-weight: 900; color: #1565c0;
+}
+.logo-amity .at1 { font-size: 12px; font-weight: 900; color: #1565c0; line-height: 1; }
+.logo-amity .at2 { font-size: 6.5px; font-weight: 500; color: #666; line-height: 1.2; }
+
+/* ── Manipal ── */
+.logo-manipal { display: flex; align-items: center; gap: 6px; }
+.logo-manipal .mi {
+  width: 20px; height: 20px; background: #8B0000; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 900; color: #fff;
+}
+.logo-manipal .mt1 { font-size: 11px; font-weight: 900; color: #333; line-height: 1; letter-spacing: 0.04em; }
+.logo-manipal .mt2 { font-size: 5px; font-weight: 500; color: #666; line-height: 1.3; }
+
+/* ── GRGVS ── */
+.logo-grgvs { display: flex; align-items: center; gap: 6px; }
+.logo-grgvs .gi { font-size: 20px; line-height: 1; }
+.logo-grgvs .gt1 { font-size: 13px; font-weight: 900; color: #e67e22; line-height: 1; }
+.logo-grgvs .gt2 { font-size: 6px; color: #999; }
+
+/* ── United Way ── */
+.logo-unitedway { display: flex; align-items: center; gap: 7px; }
+.logo-unitedway .ui {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: conic-gradient(#c0392b 0deg 180deg, #2471a3 180deg 360deg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 6.5px; font-weight: 900; color: #fff;
+  text-align: center; padding: 4px; line-height: 1.25;
+}
+.logo-unitedway .ut1 { font-size: 10px; font-weight: 700; color: #333; line-height: 1; }
+.logo-unitedway .ut2 { font-size: 7.5px; color: #666; }
+
+/* ── CSP ── */
+.logo-csp { font-size: 20px; font-weight: 900; color: #1565c0; display: flex; align-items: center; gap: 3px; }
+.logo-csp .leaf { font-size: 15px; }
+
+/* ── Career Skills Foundation ── */
+.logo-cserf {
+  width: 34px; height: 34px;
+  border: 1.5px solid #ccc; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4.5px; color: #555; font-weight: 600;
+  text-align: center; padding: 4px; line-height: 1.35; background: #fafafa;
+}
+
+/* ── Arena Animation ── */
+.logo-arena {
+  border: 2px solid #f39c12; border-radius: 3px;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 3px 8px; background: #fff;
+}
+.logo-arena .ar1 { font-size: 10px; font-weight: 900; color: #f39c12; letter-spacing: 0.07em; line-height: 1.1; }
+.logo-arena .ar2 { font-size: 6px;  font-weight: 700; color: #666; letter-spacing: 0.09em; line-height: 1.2; }
+
+/* ── Generic circle institute ── */
+.logo-inst-circle {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid #999;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5.5px; color: #666; font-weight: 700;
+  text-align: center; padding: 4px; line-height: 1.3; background: #fafafa;
+}
+
+/* ── Career Launcher ── */
+.logo-cl { display: flex; align-items: center; gap: 5px; }
+.logo-cl .ci {
+  width: 22px; height: 22px; background: #e74c3c; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 900; color: #fff;
+}
+.logo-cl .clt1 { font-size: 9px; font-weight: 700; color: #e74c3c; line-height: 1; }
+.logo-cl .clt2 { font-size: 6.5px; font-weight: 500; color: #666; line-height: 1.2; }
+
+/* ── BRDS ── */
+.logo-brds {
+  background: #c0392b; border-radius: 3px;
+  padding: 4px 8px;
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+.logo-brds .br1 { font-size: 4.5px; color: rgba(255,255,255,.85); letter-spacing: 0.03em; line-height: 1.35; max-width: 100px; }
+.logo-brds .br2 { font-size: 14px; font-weight: 900; color: #fff; letter-spacing: 0.06em; line-height: 1.1; }
+
+/* ─── Read More button ───────────────────────────── */
+.read-more-wrap {
+  text-align: center;
+  margin-top: 36px;
+}
+.read-more-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #3ab4f2, #1a82c5);
+  color: #fff;
+  font-size: 15px; font-weight: 600;
+  padding: 14px 48px; border-radius: 32px;
+  border: none; cursor: pointer;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 18px rgba(58,180,242,.35);
+  transition: transform .2s, box-shadow .2s;
+}
+.read-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(58,180,242,.45);
+}
+
+/* ─── Responsive ─────────────────────────────────── */
+@media (max-width: 760px) {
+  .top-row,
+  .two-col-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .top-col,
+  .two-col {
+    border-left: none !important;
+    width: 100%;
+  }
+  .section-heading { font-size: 22px; }
+}
+
+</style>
+</head>
+<body>
+
+<section class="comparison-section">
+
+    <div class="compare-block">
+        <h2  style="text-align:center; margin:40px 0 25px; color:#232020;">Before</h2>
+        <img src="marquee screen.webp" alt="Before Screenshot"   style="display:block;width:100%;max-width:1400px;height:auto;margin:30px auto;border-radius:12px;border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 30px rgba(0,0,0,.3);">>
+    </div>
+
+        <div class="compare-block">
+        <h2  style="text-align:center; margin:40px 0 25px; color:#232020;">After</h2>
+
+ 
+
+</section>
+
+<section class="partners-section">
+
+  <!-- ══ Header ══ -->
+  <p class="section-eyebrow">One of the most talked about career platform in India &amp; World</p>
+  <h2 class="section-heading">
+    <span class="h-blue">Our partners</span>
+    <span class="h-gray"> and </span>
+    <span class="h-navy">media mentions</span>
+  </h2>
+
+  <!-- ════════════════════════════════════════════════
+       TOP ROW — 3 columns
+       Built by Alumni of | Recognized by | In Media
+  ════════════════════════════════════════════════ -->
+  <div class="top-row">
+
+    <!-- ── Built by Alumni of ── -->
+    <div class="top-col">
+      <div class="col-label">Built by Alumni of</div><!-- STATIC label -->
+      <div class="marquee-outer">
+        <div class="marquee-track" style="animation-duration:14s;">
+          <!-- ▸ Original 4 logos -->
+          <div class="logo-item"><div class="logo-seal">IIT<br>BOMBAY</div></div>
+          <div class="logo-item"><div class="logo-seal">IIT<br>KHAR&shy;AGPUR</div></div>
+          <div class="logo-item"><div class="logo-seal" style="border-color:#1565c0;color:#1565c0;">IIM<br>AHMEDA&shy;BAD</div></div>
+          <div class="logo-item">
+            <div class="logo-nirma"><span class="n1">NIRMA</span><span class="n2">UNIVERSITY</span></div>
+          </div>
+          <!-- ▸ Duplicate 4 logos — seamless loop -->
+          <div class="logo-item"><div class="logo-seal">IIT<br>BOMBAY</div></div>
+          <div class="logo-item"><div class="logo-seal">IIT<br>KHAR&shy;AGPUR</div></div>
+          <div class="logo-item"><div class="logo-seal" style="border-color:#1565c0;color:#1565c0;">IIM<br>AHMEDA&shy;BAD</div></div>
+          <div class="logo-item">
+            <div class="logo-nirma"><span class="n1">NIRMA</span><span class="n2">UNIVERSITY</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Recognized by ── -->
+    <div class="top-col">
+      <div class="col-label">Recognized by</div><!-- STATIC label -->
+      <div class="marquee-outer">
+        <div class="marquee-track" style="animation-duration:16s;">
+          <!-- ▸ Original 3 logos -->
+          <div class="logo-item">
+            <div class="logo-cci">
+              <span class="cc-big">Cc<i style="font-size:30px;">i</i></span>
+              <span class="cc-text">COUNSELLOR COUNCIL<br>OF INDIA</span>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-msme">
+              <div class="mm1">M≡ME</div>
+              <div class="mm2">MICRO, SMALL &amp; MEDIUM<br>ENTERPRISES</div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-startup">
+              <span class="sc0">#</span><span class="sc1">s</span><span class="sc2">t</span><span class="sc3">a</span><span class="sc1">r</span><span class="sc2">t</span><span class="sc3">u</span><span class="sc1">p</span><span class="sc4">india</span>
+            </div>
+          </div>
+          <!-- ▸ Duplicate 3 logos -->
+          <div class="logo-item">
+            <div class="logo-cci">
+              <span class="cc-big">Cc<i style="font-size:30px;">i</i></span>
+              <span class="cc-text">COUNSELLOR COUNCIL<br>OF INDIA</span>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-msme">
+              <div class="mm1">M≡ME</div>
+              <div class="mm2">MICRO, SMALL &amp; MEDIUM<br>ENTERPRISES</div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-startup">
+              <span class="sc0">#</span><span class="sc1">s</span><span class="sc2">t</span><span class="sc3">a</span><span class="sc1">r</span><span class="sc2">t</span><span class="sc3">u</span><span class="sc1">p</span><span class="sc4">india</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── In Media ── -->
+    <div class="top-col">
+      <div class="col-label">In Media</div><!-- STATIC label -->
+      <div class="marquee-outer">
+        <div class="marquee-track" style="animation-duration:20s;">
+          <!-- ▸ Original 4 logos -->
+          <div class="logo-item"><div class="logo-yourstory">YOURSTORY</div></div>
+          <div class="logo-item"><div class="logo-outlook">Outlook</div></div>
+          <div class="logo-item">
+            <div class="logo-bizstd"><span>Business</span><span>Standard</span></div>
+          </div>
+          <div class="logo-item"><div class="logo-apn">APN</div></div>
+          <!-- ▸ Duplicate 4 logos -->
+          <div class="logo-item"><div class="logo-yourstory">YOURSTORY</div></div>
+          <div class="logo-item"><div class="logo-outlook">Outlook</div></div>
+          <div class="logo-item">
+            <div class="logo-bizstd"><span>Business</span><span>Standard</span></div>
+          </div>
+          <div class="logo-item"><div class="logo-apn">APN</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /top-row -->
+
+
+  <!-- ════════════════════════════════════════════════
+       MIDDLE ROW — 2 columns
+       Partner Schools | Partner Universities
+  ════════════════════════════════════════════════ -->
+  <div class="two-col-row">
+
+    <!-- ── Partner Schools ── -->
+    <div class="two-col">
+      <div class="col-label">Partner Schools</div><!-- STATIC label -->
+      <div class="marquee-outer">
+        <div class="marquee-track" style="animation-duration:18s;">
+          <!-- ▸ Original 4 logos -->
+          <div class="logo-item">
+            <div class="logo-podar"><span class="pp1">PODAR</span><span class="pp2">WORLD SCHOOL, CBSE</span></div>
+          </div>
+          <div class="logo-item"><div class="logo-circle-school">G.D.<br>GOENKA<br>WORLD</div></div>
+          <div class="logo-item">
+            <div class="logo-cygnus">
+              <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="17" cy="20" rx="11" ry="9" fill="#e8f5e9"/>
+                <path d="M17 3 Q23 10 28 18 Q21 13 17 20 Q13 13 6 18 Q11 10 17 3Z" fill="#43a047"/>
+                <path d="M17 20 Q19 25 17 29 Q15 25 17 20Z" fill="#81c784"/>
+              </svg>
+              <div>
+                <div class="ct1">cygnus</div>
+                <div class="ct2">world school</div>
+              </div>
+            </div>
+          </div>
+          <div class="logo-item"><div class="logo-stkabir">St. Kabir<br>School<br>VADODARA</div></div>
+          <!-- ▸ Duplicate 4 logos -->
+          <div class="logo-item">
+            <div class="logo-podar"><span class="pp1">PODAR</span><span class="pp2">WORLD SCHOOL, CBSE</span></div>
+          </div>
+          <div class="logo-item"><div class="logo-circle-school">G.D.<br>GOENKA<br>WORLD</div></div>
+          <div class="logo-item">
+            <div class="logo-cygnus">
+              <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="17" cy="20" rx="11" ry="9" fill="#e8f5e9"/>
+                <path d="M17 3 Q23 10 28 18 Q21 13 17 20 Q13 13 6 18 Q11 10 17 3Z" fill="#43a047"/>
+                <path d="M17 20 Q19 25 17 29 Q15 25 17 20Z" fill="#81c784"/>
+              </svg>
+              <div>
+                <div class="ct1">cygnus</div>
+                <div class="ct2">world school</div>
+              </div>
+            </div>
+          </div>
+          <div class="logo-item"><div class="logo-stkabir">St. Kabir<br>School<br>VADODARA</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Partner Universities ── -->
+    <div class="two-col">
+      <div class="col-label">Partner Universities</div><!-- STATIC label -->
+      <div class="marquee-outer">
+        <div class="marquee-track" style="animation-duration:18s;">
+          <!-- ▸ Original 3 logos -->
+          <div class="logo-item">
+            <div class="logo-symbiosis"><div class="si">S</div><div class="st">SYMBIOSIS</div></div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-amity">
+              <div class="ai">A</div>
+              <div><div class="at1">AMITY</div><div class="at2">UNIVERSITY</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-manipal">
+              <div class="mi">M</div>
+              <div><div class="mt1">MANIPAL</div><div class="mt2">ACADEMY OF HIGHER EDUCATION</div></div>
+            </div>
+          </div>
+          <!-- ▸ Duplicate 3 logos -->
+          <div class="logo-item">
+            <div class="logo-symbiosis"><div class="si">S</div><div class="st">SYMBIOSIS</div></div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-amity">
+              <div class="ai">A</div>
+              <div><div class="at1">AMITY</div><div class="at2">UNIVERSITY</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-manipal">
+              <div class="mi">M</div>
+              <div><div class="mt1">MANIPAL</div><div class="mt2">ACADEMY OF HIGHER EDUCATION</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /two-col-row -->
+
+
+  <!-- ════════════════════════════════════════════════
+       BOTTOM ROW — 2 columns
+       Partner NGOs | Partners Institutes
+  ════════════════════════════════════════════════ -->
+  <div class="two-col-row">
+
+    <!-- ── Partner NGOs ── -->
+    <div class="two-col">
+      <div class="col-label">Partner NGOs</div><!-- STATIC label -->
+      <div class="marquee-outer">
+        <div class="marquee-track" style="animation-duration:20s;">
+          <!-- ▸ Original 4 logos -->
+          <div class="logo-item">
+            <div class="logo-grgvs">
+              <span class="gi">🐘</span>
+              <div><div class="gt1">GRGVS</div><div class="gt2">Since 1986</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-unitedway">
+              <div class="ui">UW</div>
+              <div><div class="ut1">United</div><div class="ut2">Way</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-csp"><span class="leaf">🌿</span><span>CSP</span></div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-cserf">Career<br>Skills<br>Education<br>&amp; Research<br>Foundation</div>
+          </div>
+          <!-- ▸ Duplicate 4 logos -->
+          <div class="logo-item">
+            <div class="logo-grgvs">
+              <span class="gi">🐘</span>
+              <div><div class="gt1">GRGVS</div><div class="gt2">Since 1986</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-unitedway">
+              <div class="ui">UW</div>
+              <div><div class="ut1">United</div><div class="ut2">Way</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-csp"><span class="leaf">🌿</span><span>CSP</span></div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-cserf">Career<br>Skills<br>Education<br>&amp; Research<br>Foundation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Partners Institutes ── -->
+    <div class="two-col">
+      <div class="col-label">Partners Institutes</div><!-- STATIC label -->
+      <div class="marquee-outer">
+        <div class="marquee-track" style="animation-duration:20s;">
+          <!-- ▸ Original 4 logos -->
+          <div class="logo-item">
+            <div class="logo-arena"><span class="ar1">ARENA</span><span class="ar2">ANIMATION</span></div>
+          </div>
+          <div class="logo-item"><div class="logo-inst-circle">PARTNER<br>INSTITUTE</div></div>
+          <div class="logo-item">
+            <div class="logo-cl">
+              <div class="ci">CL</div>
+              <div><div class="clt1">Career</div><div class="clt2">Launcher</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-brds">
+              <span class="br1">Bhanwar Rathore Design Studio<br>Faculty: NID, NiFT &amp; IIT Alumni</span>
+              <span class="br2">BRDS</span>
+            </div>
+          </div>
+          <!-- ▸ Duplicate 4 logos -->
+          <div class="logo-item">
+            <div class="logo-arena"><span class="ar1">ARENA</span><span class="ar2">ANIMATION</span></div>
+          </div>
+          <div class="logo-item"><div class="logo-inst-circle">PARTNER<br>INSTITUTE</div></div>
+          <div class="logo-item">
+            <div class="logo-cl">
+              <div class="ci">CL</div>
+              <div><div class="clt1">Career</div><div class="clt2">Launcher</div></div>
+            </div>
+          </div>
+          <div class="logo-item">
+            <div class="logo-brds">
+              <span class="br1">Bhanwar Rathore Design Studio<br>Faculty: NID, NiFT &amp; IIT Alumni</span>
+              <span class="br2">BRDS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /two-col-row -->
+
+  <!-- ── Read More ── -->
+  <div class="read-more-wrap">
+    <button class="read-more-btn">Read More</button>
+  </div>
+
+</section>
+
+</body>
+</html>

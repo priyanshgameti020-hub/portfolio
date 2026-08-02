@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://priyanshgameti020-hub.github.io/sitemap.xml

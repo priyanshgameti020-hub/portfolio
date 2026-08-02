@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="8 web development projects by Priyansh Gameti — responsive websites built with HTML, CSS, JavaScript, PHP and MySQL.">
+<title>Web Development Projects — Priyansh Gameti</title>
+<script>
+  // Apply the theme saved from the main portfolio (or this page) before paint, to avoid a flash.
+  (function () {
+    try {
+      var saved = localStorage.getItem('portfolio-theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#06060f;--bg2:#0c0c1a;--bg3:#101020;
+  --green:#3B82F6;--green-dim:#2563EB;--green-glow:rgba(59,130,246,0.15);
+  --white:#f5f5f5;--muted:rgba(245,245,245,0.45);--muted2:rgba(245,245,245,0.2);
+  --border:rgba(255,255,255,0.08);--card:rgba(255,255,255,0.04);
+  --gr:59;--gg:130;--gb:246;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Outfit',sans-serif;overflow-x:hidden;}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--green-dim);border-radius:4px;}
+
+/* Accessible focus states */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--green);outline-offset:3px;border-radius:4px;
+}
+
+/* SCROLL PROGRESS BAR */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--green),#9b59ff);z-index:10000;transition:width .1s ease-out;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;
+  justify-content:space-between;padding:1.1rem 5%;transition:all .35s ease;}
+nav.scrolled{background:rgba(6,6,15,0.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0.8rem 5%;}
+.nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+.logo-box{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--green),#9b59ff);
+  display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#06060f;}
+.logo-text{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;font-size:1rem;}
+.logo-text span{color:var(--green);}
+.nav-links{display:flex;align-items:center;gap:1.8rem;list-style:none;flex-wrap:wrap;}
+.nav-links a{text-decoration:none;font-size:.78rem;letter-spacing:.04em;color:var(--muted);
+  transition:color .3s;padding:.3rem 0;position:relative;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--green);}
+.nav-cta{background:var(--green);color:#06060f !important;padding:.55rem 1.2rem !important;border-radius:6px;font-weight:600;}
+.nav-cta:hover{background:var(--green-dim);}
+
+/* HERO */
+.cat-hero{padding:10rem 5% 3rem;max-width:1300px;margin:0 auto;}
+.crumb{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;display:flex;gap:.5rem;flex-wrap:wrap;}
+.crumb a{color:var(--muted);text-decoration:none;}
+.crumb a:hover{color:var(--green);}
+.cat-eye{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;display:flex;align-items:center;gap:1rem;}
+.cat-eye::before{content:'';width:30px;height:1.5px;background:var(--green);}
+.cat-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,6vw,5rem);line-height:0.95;letter-spacing:.02em;margin-bottom:1rem;}
+.cat-title .green{color:var(--green);}
+.cat-sub{font-size:.95rem;color:var(--muted);line-height:1.8;max-width:640px;margin-bottom:1.5rem;}
+.cat-stats{display:flex;gap:2rem;flex-wrap:wrap;margin-top:1.5rem;}
+.cat-stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--green);}
+.cat-stat-lbl{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+/* CATEGORY NAV PILLS (switch between categories) */
+.cat-pills{display:flex;gap:.7rem;flex-wrap:wrap;padding:0 5%;max-width:1300px;margin:0 auto 3rem;}
+.cat-pill{text-decoration:none;font-size:.72rem;letter-spacing:.05em;padding:.55rem 1.1rem;border:1px solid var(--border);
+  border-radius:30px;color:var(--muted);transition:all .3s;display:flex;align-items:center;gap:.4rem;}
+.cat-pill:hover{border-color:var(--green);color:var(--white);}
+.cat-pill.active{background:var(--green);border-color:var(--green);color:#06060f;font-weight:600;}
+
+/* GRID WRAP */
+
+.grid-wrap{max-width:1300px;margin:0 auto;padding:0 5% 1rem;}
+
+/* PROJECT CARD (matches main site language) */
+
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
+.pcard{background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  transition:all .4s;position:relative;opacity:0;transform:translateY(24px);}
+.pcard.v{opacity:1;transform:translateY(0);}
+.pvis {
+  position: relative;
+  overflow: hidden;
+}
+
+.pvis-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pcard:hover{border-color:var(--green);transform:translateY(-8px);box-shadow:0 30px 70px rgba(0,0,0,.5);}
+.pvis{height:170px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.pvis-icon{font-size:2.6rem;opacity:.55;transition:all .4s;position:relative;z-index:2;}
+.pcard:hover .pvis-icon{opacity:.9;transform:scale(1.08);}
+.pline{position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--green);transition:width .5s;}
+.pcard:hover .pline{width:100%;}
+.pbody{padding:1.4rem;}
+.pgenre{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem;}
+.pname{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.04em;margin-bottom:.5rem;}
+.pdesc{font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:1rem;}
+.ptech{display:flex;flex-wrap:wrap;gap:.4rem;}
+.ptag{font-size:.6rem;border:1px solid var(--border);padding:.2rem .55rem;border-radius:3px;color:var(--muted);}
+.pcard:hover .ptag{border-color:rgba(59,130,246,.35);color:rgba(59,130,246,.85);}
+.pfooter{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;border-top:1px solid var(--border);}
+.plink{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:gap .3s;}
+.plink:hover{gap:.7rem;}
+.pyear{font-size:.6rem;color:var(--muted);font-family:'Space Mono',monospace;}
+
+/* POSTER GALLERY (design page) */
+
+.poster-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;}
+.poster-card{border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg3);
+  transition:all .4s;opacity:0;transform:translateY(24px);cursor:pointer;}
+.poster-card.v{opacity:1;transform:translateY(0);}
+.poster-card:hover{transform:translateY(-6px);border-color:var(--green);box-shadow:0 25px 60px rgba(0,0,0,.5);}
+.poster-thumb{aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.poster-thumb span{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;opacity:.85;text-align:center;padding:1rem;letter-spacing:.03em;}
+.poster-meta{padding:1rem 1.1rem;}
+.poster-title{font-size:.85rem;font-weight:600;margin-bottom:.2rem;}
+.poster-tag{font-size:.62rem;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;}
+
+/* SEO CASE STUDY CARDS */
+.seo-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.8rem;
+  opacity:0;transform:translateY(24px);transition:all .5s;}
+.seo-card.v{opacity:1;transform:translateY(0);}
+.seo-card:hover{border-color:var(--green);}
+.seo-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+.seo-name{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.03em;}
+.seo-industry{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--green);
+  border:1px solid rgba(59,130,246,.3);padding:.3rem .7rem;border-radius:20px;}
+.seo-desc{font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.4rem;}
+.ba-row{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:1rem;}
+.ba-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;}
+.ba-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+.ba-before .ba-num{color:#ff6b6b;}
+.ba-after .ba-num{color:#3ddc84;}
+.ba-num{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;}
+.ba-arrow{font-size:1.3rem;color:var(--green);}
+.seo-tools{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 5%;}
+.footer-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--green);letter-spacing:.1em;}
+.footer-copy{font-size:.7rem;color:var(--muted);letter-spacing:.05em;}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-size:.7rem;color:var(--muted);text-decoration:none;letter-spacing:.05em;transition:color .3s;}
+.footer-links a:hover{color:var(--green);}
+
+/* BACK TO TOP */
+#backToTop{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;border-radius:50%;
+  background:var(--green);color:#06060f;border:none;cursor:pointer;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;
+  transform:translateY(10px);transition:all .35s ease;z-index:900;box-shadow:0 10px 30px rgba(0,0,0,.4);}
+#backToTop.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+#backToTop:hover{background:var(--green-dim);}
+
+@media(max-width:760px){
+  .nav-links{display:none;}
+  .cat-hero{padding:8rem 6% 2rem;}
+  .grid-wrap{padding:0 6% 4rem;}
+}
+
+/* ═══ LIGHT THEME (mirrors the main portfolio's theme system) ═══ */
+html[data-theme="light"]{
+  --bg:#f2f5fb;--bg2:#e8ecf6;--bg3:#dde3f0;
+  --white:#0d0d18;--muted:rgba(13,13,24,0.55);--muted2:rgba(13,13,24,0.2);
+  --border:rgba(0,0,0,0.09);--card:rgba(0,0,0,0.04);
+}
+html[data-theme="light"] nav.scrolled{background:rgba(242,245,251,0.92);border-bottom-color:rgba(0,0,0,0.08);}
+html[data-theme="light"] ::-webkit-scrollbar-thumb{background:var(--green);}
+html[data-theme="light"] .logo-box{color:#fff;}
+html[data-theme="light"] #backToTop{color:#fff;}
+
+/* Theme toggle button (mini, in nav) */
+.theme-toggle{background:none;border:1px solid var(--border);border-radius:20px;cursor:pointer;
+  width:40px;height:26px;position:relative;flex-shrink:0;transition:border-color .3s;}
+.theme-toggle:hover{border-color:var(--green);}
+.theme-toggle .tt-dot{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+  background:var(--green);transition:transform .3s ease;display:flex;align-items:center;justify-content:center;font-size:.6rem;}
+html[data-theme="light"] .theme-toggle .tt-dot{transform:translateX(14px);}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<nav id="nb">
+  <a href="priyansh-portfolio-final.html" class="nav-logo">
+    <div class="logo-box">PG</div>
+    <span class="logo-text">PRIYANSH<span>GAMETI</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="priyansh-portfolio-final.html">Home</a></li>
+    <li><a href="priyansh-portfolio-final.html#about">About</a></li>
+    <li><a href="priyansh-portfolio-final.html#projects">Projects</a></li>
+    <li><a href="priyansh-portfolio-final.html#resume">Resume</a></li>
+    <li><a href="priyansh-portfolio-final.html#" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light / dark mode" title="Toggle light / dark mode">
+    <span class="tt-dot">🌙</span>
+  </button>
+</nav>
+
+
+<div class="cat-hero">
+  <div class="crumb"><a href="priyansh-portfolio-final.html">Home</a> / <a href="priyansh-portfolio-final.html#projects">Projects</a> / Web Development</div>
+  <div class="cat-eye">Project Category</div>
+  <h1 class="cat-title">WEB <span class="green">DEVELOPMENT</span></h1>
+  <p class="cat-sub">Responsive, SEO-friendly websites built with HTML, CSS, JavaScript and PHP/MySQL — from business sites to internal tools. <em style="opacity:.65">(Placeholder content — swap for real project details, screenshots and live links.)</em></p>
+  <div class="cat-stats"><div><div class="cat-stat-num">4</div><div class="cat-stat-lbl">Projects</div></div></div>
+</div>
+<div class="cat-pills">
+<a href="projects-web.html" class="cat-pill active">💻 Web Development</a>
+<a href="projects-python.html" class="cat-pill">🐍 Python</a>
+<a href="projects-design.html" class="cat-pill">🎨 Graphic Design</a>
+<!-- <a href="projects-seo.html" class="cat-pill">🔍 SEO Case Studies</a> -->
+</div>
+
+ <div class="grid-wrap"><div class="proj-grid">
+    <div class="pcard">
+      <div class="pvis" >
+         <img src="images/Feedback form.webp" alt="Project Preview" class="pimg">
+        <div class="pline"></div>
+      </div>
+      <div class="pbody">
+        <div class="pgenre">Web Development</div>
+        <div class="pname">Feedback Form</div>
+        <p class="pdesc">A Feedback form  help the user to interact with the website</p>
+        <div class="ptech"><span class="ptag">Html5</span><span class="ptag">CSS3</span><span class="ptag">JavaScript</span></div>
+      </div>
+      <div class="pfooter"><a href="Projects/Frontend projects/Career_Counselling_Feedback_FINAL_fixed_1.html" class="plink" target="_blank">View -- →</a><span class="pyear">2025</span></div>
+    </div>
+    <div class="pcard">
+      <div class="pvis" style="background:linear-gradient(135deg,#0e1a12,#0a140d);">
+        <img src="images/Robot.webp" alt="Project Preview" class="pimg">
+        <div class="pline"></div>
+      </div>
+      <div class="pbody">
+        <div class="pgenre">UI/UX Development</div>
+        <div class="pname">Interactive AI Robot Landing Page</div>
+        <p class="pdesc">  Designed and developed a modern AI assistant robot with responsive layouts,
+    smooth hover animations, floating effects, and engaging micro-interactions
+    to create an attractive and interactive user experience across all devices.</p>
+        
+      <div class="ptech"><span class="ptag">HTML5</span> <span class="ptag">CSS3</span><span class="ptag">JavaScript</span><span class="ptag">Animations</span><span class="ptag">Responsive Design</span></div>
+      </div>
+      <div class="pfooter"><a href="Projects/Frontend projects/careernaksha_2.html" class="plink" target="_blank">View -- →</a><span class="pyear">2025</span></div>
+    </div></div></div> 
+
+ <div class="grid-wrap" style="margin:0 auto;padding:0 5% 6rem;"><div class="proj-grid">
+    <div class="pcard">
+      <div class="pvis" style="background:linear-gradient(135deg,#0e1a12,#0a140d);">
+        <img src="images/adani.webp" alt="Project Preview" class="pimg">
+        <div class="pline"></div>
+      </div>
+      <div class="pbody">
+        <div class="pgenre">Web Development • NGO Platform</div>
+        <div class="pname">Adani Utthan Project Website</div>
+        <p class="pdesc">     Designed and developed a responsive website for the Adani Utthan Project
+        to showcase educational initiatives, training programs, community
+        development activities, project impact, success stories, and beneficiary
+        information through a modern, user-friendly interface..</p>
+         <div class="ptech"><span class="ptag">HTML5</span> <span class="ptag">CSS3</span><span class="ptag">JavaScript</span><span class="ptag">Animations</span><span class="ptag">Responsive Design</span></div>
+      </div>
+      <div class="pfooter"><a href="Projects/Frontend projects/utthan-project-detail.html" class="plink" target="_blank">View --→</a><span class="pyear">2025</span></div>
+    </div>
+    <div class="pcard">
+      <div class="pvis" style="background:linear-gradient(135deg,#0e1a12,#0a140d);">
+        <img src="images/marquee screen.webp" alt="Project Preview" class="pimg">
+        <div class="pline"></div>
+      </div>
+      <div class="pbody">
+        <div class="pgenre">Frontend UI Enhancement </div>
+        <div class="pname">Infinite Partner Logo Marquee</div>
+        <p class="pdesc"> Redesigned a static partner logo section into a smooth, responsive infinite marquee with continuous scrolling. Improved visual engagement, reduced page clutter, optimized logo loading, and ensured seamless performance across desktop and mobile devices..</p>
+        <div class="ptech"><span class="ptag">HTML5</span><span class="ptag">CSS3</span><span class="ptag">JavaScript</span><span class="ptag">CSS Animation</span><span class="ptag">Responsive Design</span></div>
+      </div>
+      <div class="pfooter"><a href="Projects/Frontend projects/partners-marquee_2.html" class="plink" target="_blank">View -- →</a><span class="pyear">2025</span></div>
+    </div></div></div> 
+
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">PRIYANSH GAMETI</div>
+    <div class="footer-copy">© 2026 Priyansh Gameti. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="priyansh-portfolio-final.html#about">About</a>
+      <a href="priyansh-portfolio-final.html#skills">Skills</a>
+      <a href="priyansh-portfolio-final.html#projects">Projects</a>
+      <a href="priyansh-portfolio-final.html#resume">Resume</a>
+      <a href="priyansh-portfolio-final.html#">Contact</a>
+    </div>
+  </div>
+</footer>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+// Theme: read the preference saved from the main portfolio (or this page) and apply it
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const dot = document.querySelector('#themeToggle .tt-dot');
+  if (dot) dot.textContent = theme === 'light' ? '☀️' : '🌙';
+  try { localStorage.setItem('portfolio-theme', theme); } catch (e) {}
+}
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  applyTheme(current === 'light' ? 'dark' : 'light');
+}
+(function () {
+  try {
+    const saved = localStorage.getItem('portfolio-theme');
+    if (saved === 'light' || saved === 'dark') applyTheme(saved);
+  } catch (e) {}
+})();
+
+// Scroll progress bar
+const bar = document.getElementById('scrollProgress');
+const nav = document.getElementById('nb');
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  bar.style.width = scrolled + '%';
+  nav.classList.toggle('scrolled', h.scrollTop > 40);
+  btt.classList.toggle('show', h.scrollTop > 500);
+}, { passive: true });
+btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Reveal on scroll
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); io.unobserve(e.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.pcard, .poster-card, .seo-card').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
